@@ -21,6 +21,8 @@ A [DLL injector](https://en.wikipedia.org/wiki/DLL_injection) to inject the buil
 
 -fully removed vmp support
 
+-a lot of bugs, crashes were patched, performance optimized
+
 # screenshots
 
 soon
