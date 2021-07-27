@@ -5,7 +5,7 @@
 *.cs linguist-detectable=false
 *.c linguist-detectable=false
 *.sh linguist-detectable=false
-*.h linguist-detectable=false # sorry
+*.h linguist-detectable=false 
 
 ###############################################################################
 # Set default behavior for command prompt diff.
