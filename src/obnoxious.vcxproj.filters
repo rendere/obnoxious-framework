@@ -1,0 +1,792 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Engine\Engine.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Entity.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\EntityMem.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\GrenadePrediction.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\NetVar.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Weapon.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\gui.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\menu.h">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Hacks\Esp\Esp.cpp">
+      <Filter>Hacks\Esp</Filter>
+    </ClCompile>
+    <ClCompile Include="Hacks\Misc\Misc.cpp">
+      <Filter>Hacks\Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="Hacks\Skins\DynSkin.cpp">
+      <Filter>Hacks\Skins</Filter>
+    </ClCompile>
+    <ClCompile Include="Hacks\Skins\Skins.cpp">
+      <Filter>Hacks\Skins</Filter>
+    </ClCompile>
+    <ClCompile Include="Hacks\Settings.cpp">
+      <Filter>Hacks</Filter>
+    </ClCompile>
+    <ClCompile Include="Hacks\Setup.cpp">
+      <Filter>Hacks</Filter>
+    </ClCompile>
+    <ClCompile Include="Include\Headers.h">
+      <Filter>Include</Filter>
+    </ClCompile>
+    <ClCompile Include="Hooks\Initialize\Offsets.cpp">
+      <Filter>Initialize</Filter>
+    </ClCompile>
+    <ClCompile Include="Hooks\MinHook\src\buffer.c">
+      <Filter>X1API\MinHook\src</Filter>
+    </ClCompile>
+    <ClCompile Include="Hooks\MinHook\src\trampoline.c">
+      <Filter>X1API\MinHook\src</Filter>
+    </ClCompile>
+    <ClCompile Include="Hooks\MinHook\src\hook.c">
+      <Filter>X1API\MinHook\src</Filter>
+    </ClCompile>
+    <ClCompile Include="Hooks\MinHook\src\HDE\hde32.c">
+      <Filter>X1API\MinHook\src\HDE</Filter>
+    </ClCompile>
+    <ClCompile Include="Hooks\MinHook\src\HDE\hde64.c">
+      <Filter>X1API\MinHook\src\HDE</Filter>
+    </ClCompile>
+    <ClCompile Include="Render\DXFont.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
+    <ClCompile Include="Render\DXOverlayManager.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
+    <ClCompile Include="Render\DXRenderDraw.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
+    <ClCompile Include="Render\DXRenderInit.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
+    <ClCompile Include="Render\DXRender.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\SDK\CRC.cpp">
+      <Filter>Engine\SDK</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\SDK\SDK.cpp">
+      <Filter>Engine\SDK</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\SDK\Vector2D.cpp">
+      <Filter>Engine\SDK</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\SDK\Vector4D.cpp">
+      <Filter>Engine\SDK</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\SDK\VMatrix.cpp">
+      <Filter>Engine\SDK</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\SDK\CRC.cpp" />
+    <ClCompile Include="Engine\SDK\SDK.cpp" />
+    <ClCompile Include="Engine\SDK\Vector2D.cpp" />
+    <ClCompile Include="Engine\SDK\Vector4D.cpp" />
+    <ClCompile Include="Engine\SDK\VMatrix.cpp" />
+    <ClCompile Include="Engine\Engine.cpp" />
+    <ClCompile Include="Engine\Entity.cpp" />
+    <ClCompile Include="Engine\EntityMem.cpp" />
+    <ClCompile Include="Engine\GrenadePrediction.cpp" />
+    <ClCompile Include="Engine\NetVar.cpp" />
+    <ClCompile Include="Engine\Weapon.cpp" />
+    <ClCompile Include="GUI\Gui.cpp" />
+    <ClCompile Include="Hacks\Esp\Esp.cpp" />
+    <ClCompile Include="Hacks\Misc\Misc.cpp" />
+    <ClCompile Include="Hacks\Skins\DynSkin.cpp" />
+    <ClCompile Include="Hacks\Skins\Skins.cpp" />
+    <ClCompile Include="Hacks\Settings.cpp" />
+    <ClCompile Include="Hacks\Setup.cpp" />
+    <ClCompile Include="Render\DXFont.cpp" />
+    <ClCompile Include="Render\DXOverlayManager.cpp" />
+    <ClCompile Include="Render\DXRender.cpp" />
+    <ClCompile Include="Render\DXRenderDraw.cpp" />
+    <ClCompile Include="Render\DXRenderInit.cpp" />
+    <ClCompile Include="Hacks\Radar\Radar.cpp">
+      <Filter>Hacks\Radar</Filter>
+    </ClCompile>
+    <ClCompile Include="Hacks\Radar\RadarMenu.cpp">
+      <Filter>Hacks\Radar</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Utils\Utils.cpp">
+      <Filter>Engine\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\SDK\checksum_md5.cpp">
+      <Filter>Engine\SDK</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\SDK\KeyValues.cpp">
+      <Filter>Engine\SDK</Filter>
+    </ClCompile>
+    <ClCompile Include="Hacks\Radar\Radar.cpp">
+      <Filter>Hacks\Radar</Filter>
+    </ClCompile>
+    <ClCompile Include="Hacks\Radar\RadarMenu.cpp">
+      <Filter>Hacks\Radar</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\SDK\Math.cpp">
+      <Filter>Engine\SDK</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\SDK\KeyValues.cpp">
+      <Filter>Engine\SDK</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\EnginePrediction.cpp" />
+    <ClCompile Include="Engine\SDK\Vector.cpp" />
+    <ClCompile Include="protobuf\base_gcmessages.pb.cc" />
+    <ClCompile Include="protobuf\cstrike15_gcmessages.pb.cc" />
+    <ClCompile Include="protobuf\econ_gcmessages.pb.cc" />
+    <ClCompile Include="protobuf\engine_gcmessages.pb.cc" />
+    <ClCompile Include="protobuf\fatdemo.pb.cc" />
+    <ClCompile Include="protobuf\gcsdk_gcmessages.pb.cc" />
+    <ClCompile Include="protobuf\gcsystemmsgs.pb.cc" />
+    <ClCompile Include="protobuf\netmessages.pb.cc" />
+    <ClCompile Include="protobuf\network_connection.pb.cc" />
+    <ClCompile Include="protobuf\steamdatagram_messages.pb.cc" />
+    <ClCompile Include="protobuf\steammessages.pb.cc" />
+    <ClCompile Include="Hacks\Inventory\Inventory.cpp" />
+    <ClCompile Include="api\Hide\cHide.cpp" />
+    <ClCompile Include="hacks\esp\custom_visuals.cpp" />
+    <ClCompile Include="Hacks\Esp\player_esp.cpp" />
+    <ClCompile Include="Hacks\Esp\world_esp.cpp" />
+    <ClCompile Include="Hacks\GrenadeHelper\grenadehelper.cpp" />
+    <ClCompile Include="Hacks\GrenadeHelper\grenadehelpermenu.cpp" />
+    <ClCompile Include="Hacks\Inventory\inventorymenu.cpp" />
+    <ClCompile Include="Hacks\aim\aimbot.cpp" />
+    <ClCompile Include="Hacks\aim\aimbotmenu.cpp" />
+    <ClCompile Include="Hacks\Misc\miscmenu.cpp" />
+    <ClCompile Include="Hacks\Skins\kit_parser.cpp" />
+    <ClCompile Include="Hacks\Skins\skinsmenu.cpp" />
+    <ClCompile Include="hacks\esp\espmenu.cpp" />
+    <ClCompile Include="api\crypt\base64.cpp" />
+    <ClCompile Include="api\crypt\crypt.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="main.h" />
+    <ClInclude Include="Engine\Engine.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Entity.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\EntityMem.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\GrenadePrediction.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\NetVar.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Weapon.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\gui.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Hacks\Esp\Esp.h">
+      <Filter>Hacks\Esp</Filter>
+    </ClInclude>
+    <ClInclude Include="Hacks\Misc\Misc.h">
+      <Filter>Hacks\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="Hacks\Skins\DynSkin.h">
+      <Filter>Hacks\Skins</Filter>
+    </ClInclude>
+    <ClInclude Include="Hacks\Skins\Skins.h">
+      <Filter>Hacks\Skins</Filter>
+    </ClInclude>
+    <ClInclude Include="Hacks\Settings.h">
+      <Filter>Hacks</Filter>
+    </ClInclude>
+    <ClInclude Include="Hacks\Setup.h">
+      <Filter>Hacks</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Winheaders.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Def.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="Hooks\Initialize\Offsets.h">
+      <Filter>Initialize</Filter>
+    </ClInclude>
+    <ClInclude Include="Json\Json.hpp">
+      <Filter>Json</Filter>
+    </ClInclude>
+    <ClInclude Include="Hooks\MinHook\MinHook.h">
+      <Filter>X1API\MinHook</Filter>
+    </ClInclude>
+    <ClInclude Include="Hooks\MinHook\src\buffer.h">
+      <Filter>X1API\MinHook\src</Filter>
+    </ClInclude>
+    <ClInclude Include="Hooks\MinHook\hook.h">
+      <Filter>X1API\MinHook</Filter>
+    </ClInclude>
+    <ClInclude Include="Hooks\MinHook\src\trampoline.h">
+      <Filter>X1API\MinHook\src</Filter>
+    </ClInclude>
+    <ClInclude Include="Hooks\MinHook\src\HDE\hde32.h">
+      <Filter>X1API\MinHook\src\HDE</Filter>
+    </ClInclude>
+    <ClInclude Include="Hooks\MinHook\src\HDE\hde64.h">
+      <Filter>X1API\MinHook\src\HDE</Filter>
+    </ClInclude>
+    <ClInclude Include="Hooks\MinHook\src\HDE\table32.h">
+      <Filter>X1API\MinHook\src\HDE</Filter>
+    </ClInclude>
+    <ClInclude Include="Hooks\MinHook\src\HDE\table64.h">
+      <Filter>X1API\MinHook\src\HDE</Filter>
+    </ClInclude>
+    <ClInclude Include="Hooks\MinHook\src\HDE\pstdint.h">
+      <Filter>X1API\MinHook\src\HDE</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\DirectData\EndScene.h">
+      <Filter>Render\DirectData</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\DirectData\Reset.h">
+      <Filter>Render\DirectData</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\DirectData\Present.h">
+      <Filter>Render\DirectData</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\Fonts\Arial.h">
+      <Filter>Render\Fonts</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\Fonts\stb_rect_pack.h">
+      <Filter>Render\Fonts</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\Fonts\stb_truetype.h">
+      <Filter>Render\Fonts</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\Fonts\WeaponIcons.h">
+      <Filter>Render\Fonts</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\Fonts\Tahoma.h">
+      <Filter>Render\Fonts</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\color.h">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\DXOverlayManager.h">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\DXFont.h">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\DXRender.h">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Hooks\CreateMove.h">
+      <Filter>Hooks</Filter>
+    </ClInclude>
+    <ClInclude Include="Hooks\Views.h">
+      <Filter>Hooks</Filter>
+    </ClInclude>
+    <ClInclude Include="Hooks\Tables.h">
+      <Filter>Hooks</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\SDK\BaseTypes.h">
+      <Filter>Engine\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\SDK\ButtonCode.h">
+      <Filter>Engine\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\SDK\CGlobalVarsBase.hpp">
+      <Filter>Engine\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\SDK\CHandle.hpp">
+      <Filter>Engine\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\SDK\ClientClass.hpp">
+      <Filter>Engine\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\SDK\Color.hpp">
+      <Filter>Engine\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\SDK\Const.h">
+      <Filter>Engine\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\SDK\CRC.hpp">
+      <Filter>Engine\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\SDK\Definitions.hpp">
+      <Filter>Engine\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\SDK\IAppSystem.hpp">
+      <Filter>Engine\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\SDK\IBaseClientDll.hpp">
+      <Filter>Engine\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\SDK\IClientEntity.hpp">
+      <Filter>Engine\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\SDK\IClientEntityList.hpp">
+      <Filter>Engine\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\SDK\IClientMode.hpp">
+      <Filter>Engine\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\SDK\IClientNetworkable.hpp">
+      <Filter>Engine\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\SDK\IClientRenderable.hpp">
+      <Filter>Engine\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\SDK\IClientThinkable.hpp">
+      <Filter>Engine\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\SDK\IClientUnknown.hpp">
+      <Filter>Engine\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\SDK\ICollideable.h">
+      <Filter>Engine\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\SDK\IDebugOverlay.hpp">
+      <Filter>Engine\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\SDK\IEngineSound.h">
+      <Filter>Engine\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\SDK\IEngineTrace.hpp">
+      <Filter>Engine\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\SDK\IGameEvent.h">
+      <Filter>Engine\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\SDK\IHandleEntity.hpp">
+      <Filter>Engine\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\SDK\ILocalize.hpp">
+      <Filter>Engine\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\SDK\IMaterialSystem.h">
+      <Filter>Engine\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\SDK\InputEnums.h">
+      <Filter>Engine\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\SDK\ISurface.h">
+      <Filter>Engine\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\SDK\IVEngineClient.hpp">
+      <Filter>Engine\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\SDK\IVModelInfoClient.hpp">
+      <Filter>Engine\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\SDK\IVModelRender.h">
+      <Filter>Engine\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\SDK\IVRenderView.h">
+      <Filter>Engine\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\SDK\Vplane.h">
+      <Filter>Engine\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\SDK\memalloc.h">
+      <Filter>Engine\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\SDK\QAngle.hpp">
+      <Filter>Engine\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\SDK\Recv.hpp">
+      <Filter>Engine\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\SDK\SDK.h">
+      <Filter>Engine\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\SDK\TextureGroupNames.h">
+      <Filter>Engine\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\SDK\Vector.hpp">
+      <Filter>Engine\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\SDK\Vector2D.hpp">
+      <Filter>Engine\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\SDK\Vector4D.hpp">
+      <Filter>Engine\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\SDK\VMatrix.hpp">
+      <Filter>Engine\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\SDK\BaseTypes.h" />
+    <ClInclude Include="Engine\SDK\ButtonCode.h" />
+    <ClInclude Include="Engine\SDK\CGlobalVarsBase.hpp" />
+    <ClInclude Include="Engine\SDK\CHandle.hpp" />
+    <ClInclude Include="Engine\SDK\ClientClass.hpp" />
+    <ClInclude Include="Engine\SDK\Color.hpp" />
+    <ClInclude Include="Engine\SDK\Const.h" />
+    <ClInclude Include="Engine\SDK\CRC.hpp" />
+    <ClInclude Include="Engine\SDK\Definitions.hpp" />
+    <ClInclude Include="Engine\SDK\IAppSystem.hpp" />
+    <ClInclude Include="Engine\SDK\IBaseClientDll.hpp" />
+    <ClInclude Include="Engine\SDK\IClientEntity.hpp" />
+    <ClInclude Include="Engine\SDK\IClientEntityList.hpp" />
+    <ClInclude Include="Engine\SDK\IClientMode.hpp" />
+    <ClInclude Include="Engine\SDK\IClientNetworkable.hpp" />
+    <ClInclude Include="Engine\SDK\IClientRenderable.hpp" />
+    <ClInclude Include="Engine\SDK\IClientThinkable.hpp" />
+    <ClInclude Include="Engine\SDK\IClientUnknown.hpp" />
+    <ClInclude Include="Engine\SDK\ICollideable.h" />
+    <ClInclude Include="Engine\SDK\IDebugOverlay.hpp" />
+    <ClInclude Include="Engine\SDK\IEngineSound.h" />
+    <ClInclude Include="Engine\SDK\IEngineTrace.hpp" />
+    <ClInclude Include="Engine\SDK\IGameEvent.h" />
+    <ClInclude Include="Engine\SDK\IHandleEntity.hpp" />
+    <ClInclude Include="Engine\SDK\ILocalize.hpp" />
+    <ClInclude Include="Engine\SDK\IMaterialSystem.h" />
+    <ClInclude Include="Engine\SDK\InputEnums.h" />
+    <ClInclude Include="Engine\SDK\ISurface.h" />
+    <ClInclude Include="Engine\SDK\IVEngineClient.hpp" />
+    <ClInclude Include="Engine\SDK\IVModelInfoClient.hpp" />
+    <ClInclude Include="Engine\SDK\IVModelRender.h" />
+    <ClInclude Include="Engine\SDK\IVRenderView.h" />
+    <ClInclude Include="Engine\SDK\memalloc.h" />
+    <ClInclude Include="Engine\SDK\QAngle.hpp" />
+    <ClInclude Include="Engine\SDK\Recv.hpp" />
+    <ClInclude Include="Engine\SDK\SDK.h" />
+    <ClInclude Include="Engine\SDK\TextureGroupNames.h" />
+    <ClInclude Include="Engine\SDK\Vector.hpp" />
+    <ClInclude Include="Engine\SDK\Vector2D.hpp" />
+    <ClInclude Include="Engine\SDK\Vector4D.hpp" />
+    <ClInclude Include="Engine\SDK\VMatrix.hpp" />
+    <ClInclude Include="Engine\SDK\Vplane.h" />
+    <ClInclude Include="Engine\Engine.h" />
+    <ClInclude Include="Engine\Entity.h" />
+    <ClInclude Include="Engine\EntityMem.h" />
+    <ClInclude Include="Engine\GrenadePrediction.h" />
+    <ClInclude Include="Engine\NetVar.h" />
+    <ClInclude Include="Engine\Weapon.h" />
+    <ClInclude Include="GUI\Gui.h" />
+    <ClInclude Include="Hacks\Esp\Esp.h" />
+    <ClInclude Include="Hacks\Misc\Misc.h" />
+    <ClInclude Include="Hacks\Skins\DynSkin.h" />
+    <ClInclude Include="Hacks\Skins\Skins.h" />
+    <ClInclude Include="Hacks\Settings.h" />
+    <ClInclude Include="Hacks\Setup.h" />
+    <ClInclude Include="Hooks\CreateMove.h" />
+    <ClInclude Include="Hooks\Tables.h" />
+    <ClInclude Include="Hooks\Views.h" />
+    <ClInclude Include="Include\Def.h" />
+    <ClInclude Include="Include\Winheaders.h" />
+    <ClInclude Include="Json\Json.hpp" />
+    <ClInclude Include="Render\DirectData\EndScene.h" />
+    <ClInclude Include="Render\DirectData\Present.h" />
+    <ClInclude Include="Render\DirectData\Reset.h" />
+    <ClInclude Include="Render\Fonts\Arial.h" />
+    <ClInclude Include="Render\Fonts\stb_rect_pack.h" />
+    <ClInclude Include="Render\Fonts\stb_truetype.h" />
+    <ClInclude Include="Render\Fonts\Tahoma.h" />
+    <ClInclude Include="Render\Fonts\WeaponIcons.h" />
+    <ClInclude Include="Render\color.h" />
+    <ClInclude Include="Render\DXFont.h" />
+    <ClInclude Include="Render\DXOverlayManager.h" />
+    <ClInclude Include="Render\DXRender.h" />
+    <ClInclude Include="Hacks\Radar\Radar.h">
+      <Filter>Hacks\Radar</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\SDK\CInput.hpp">
+      <Filter>Engine\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Utils\Utils.h">
+      <Filter>Engine\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\SDK\CGlowObjectManager.h">
+      <Filter>Engine\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\SDK\checksum_md5.hpp">
+      <Filter>Engine\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\SDK\ClientState.hpp">
+      <Filter>Engine\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\SDK\CUserCmd.hpp">
+      <Filter>Engine\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\SDK\IGameRules.h">
+      <Filter>Engine\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="Hooks\Initialize\Initialize.h">
+      <Filter>Initialize</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\SDK\KeyValues.h">
+      <Filter>Engine\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\SDK\IPredition.hpp">
+      <Filter>Engine\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\SDK\IPhysics.hpp">
+      <Filter>Engine\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="steam_sdk\isteamapplist.h">
+      <Filter>steam_sdk</Filter>
+    </ClInclude>
+    <ClInclude Include="steam_sdk\isteamapps.h">
+      <Filter>steam_sdk</Filter>
+    </ClInclude>
+    <ClInclude Include="steam_sdk\isteamappticket.h">
+      <Filter>steam_sdk</Filter>
+    </ClInclude>
+    <ClInclude Include="steam_sdk\isteamclient.h">
+      <Filter>steam_sdk</Filter>
+    </ClInclude>
+    <ClInclude Include="steam_sdk\isteamcontroller.h">
+      <Filter>steam_sdk</Filter>
+    </ClInclude>
+    <ClInclude Include="steam_sdk\isteamfriends.h">
+      <Filter>steam_sdk</Filter>
+    </ClInclude>
+    <ClInclude Include="steam_sdk\isteamgamecoordinator.h">
+      <Filter>steam_sdk</Filter>
+    </ClInclude>
+    <ClInclude Include="steam_sdk\isteamgameserver.h">
+      <Filter>steam_sdk</Filter>
+    </ClInclude>
+    <ClInclude Include="steam_sdk\isteamgameserverstats.h">
+      <Filter>steam_sdk</Filter>
+    </ClInclude>
+    <ClInclude Include="steam_sdk\isteamhtmlsurface.h">
+      <Filter>steam_sdk</Filter>
+    </ClInclude>
+    <ClInclude Include="steam_sdk\isteamhttp.h">
+      <Filter>steam_sdk</Filter>
+    </ClInclude>
+    <ClInclude Include="steam_sdk\isteaminventory.h">
+      <Filter>steam_sdk</Filter>
+    </ClInclude>
+    <ClInclude Include="steam_sdk\isteammasterserverupdater.h">
+      <Filter>steam_sdk</Filter>
+    </ClInclude>
+    <ClInclude Include="steam_sdk\isteammatchmaking.h">
+      <Filter>steam_sdk</Filter>
+    </ClInclude>
+    <ClInclude Include="steam_sdk\isteammusic.h">
+      <Filter>steam_sdk</Filter>
+    </ClInclude>
+    <ClInclude Include="steam_sdk\isteammusicremote.h">
+      <Filter>steam_sdk</Filter>
+    </ClInclude>
+    <ClInclude Include="steam_sdk\isteamnetworking.h">
+      <Filter>steam_sdk</Filter>
+    </ClInclude>
+    <ClInclude Include="steam_sdk\isteamparentalsettings.h">
+      <Filter>steam_sdk</Filter>
+    </ClInclude>
+    <ClInclude Include="steam_sdk\isteamps3overlayrenderer.h">
+      <Filter>steam_sdk</Filter>
+    </ClInclude>
+    <ClInclude Include="steam_sdk\isteamremotestorage.h">
+      <Filter>steam_sdk</Filter>
+    </ClInclude>
+    <ClInclude Include="steam_sdk\isteamscreenshots.h">
+      <Filter>steam_sdk</Filter>
+    </ClInclude>
+    <ClInclude Include="steam_sdk\isteamugc.h">
+      <Filter>steam_sdk</Filter>
+    </ClInclude>
+    <ClInclude Include="steam_sdk\isteamuser.h">
+      <Filter>steam_sdk</Filter>
+    </ClInclude>
+    <ClInclude Include="steam_sdk\isteamuserstats.h">
+      <Filter>steam_sdk</Filter>
+    </ClInclude>
+    <ClInclude Include="steam_sdk\isteamutils.h">
+      <Filter>steam_sdk</Filter>
+    </ClInclude>
+    <ClInclude Include="steam_sdk\isteamvideo.h">
+      <Filter>steam_sdk</Filter>
+    </ClInclude>
+    <ClInclude Include="steam_sdk\steam_api_flat.h">
+      <Filter>steam_sdk</Filter>
+    </ClInclude>
+    <ClInclude Include="steam_sdk\steam_api_internal.h">
+      <Filter>steam_sdk</Filter>
+    </ClInclude>
+    <ClInclude Include="steam_sdk\steam_gameserver.h">
+      <Filter>steam_sdk</Filter>
+    </ClInclude>
+    <ClInclude Include="steam_sdk\steamclientpublic.h">
+      <Filter>steam_sdk</Filter>
+    </ClInclude>
+    <ClInclude Include="steam_sdk\steamencryptedappticket.h">
+      <Filter>steam_sdk</Filter>
+    </ClInclude>
+    <ClInclude Include="steam_sdk\steamhttpenums.h">
+      <Filter>steam_sdk</Filter>
+    </ClInclude>
+    <ClInclude Include="steam_sdk\steamps3params.h">
+      <Filter>steam_sdk</Filter>
+    </ClInclude>
+    <ClInclude Include="steam_sdk\steamtypes.h">
+      <Filter>steam_sdk</Filter>
+    </ClInclude>
+    <ClInclude Include="steam_sdk\steamuniverse.h">
+      <Filter>steam_sdk</Filter>
+    </ClInclude>
+    <ClInclude Include="Hacks\Radar\Radar.h">
+      <Filter>Hacks\Radar</Filter>
+    </ClInclude>
+    <ClInclude Include="steam_sdk\matchmakingtypes.h">
+      <Filter>Engine\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\TestTexture.h">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\SDK\Math.hpp">
+      <Filter>Engine\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\XorStr.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Hooks\Other.h">
+      <Filter>Hooks</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\SDK\KeyValues.h">
+      <Filter>Engine\SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="steam_sdk\steam_api.h">
+      <Filter>steam_sdk</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\TestTexture.h">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="steam_sdk\steam_api.h" />
+    <ClInclude Include="Engine\SDK\CItemSystem.hpp" />
+    <ClInclude Include="Engine\EnginePrediction.h" />
+    <ClInclude Include="Engine\SDK\IMaterialVar.h" />
+    <ClInclude Include="Engine\SDK\Cvar.h" />
+    <ClInclude Include="Engine\SDK\CUtlMemory.h" />
+    <ClInclude Include="Engine\SDK\CUtlVector.h" />
+    <ClInclude Include="protobuf\base_gcmessages.pb.h" />
+    <ClInclude Include="protobuf\cstrike15_gcmessages.pb.h" />
+    <ClInclude Include="protobuf\econ_gcmessages.pb.h" />
+    <ClInclude Include="protobuf\engine_gcmessages.pb.h" />
+    <ClInclude Include="protobuf\fatdemo.pb.h" />
+    <ClInclude Include="protobuf\gcsdk_gcmessages.pb.h" />
+    <ClInclude Include="protobuf\gcsystemmsgs.pb.h" />
+    <ClInclude Include="protobuf\netmessages.pb.h" />
+    <ClInclude Include="protobuf\network_connection.pb.h" />
+    <ClInclude Include="protobuf\steamdatagram_messages.pb.h" />
+    <ClInclude Include="protobuf\steammessages.pb.h" />
+    <ClInclude Include="Hacks\Inventory\Inventory.h" />
+    <ClInclude Include="api\detours.h" />
+    <ClInclude Include="api\Hide\cHide.h" />
+    <ClInclude Include="api\ThreadInMemory.h" />
+    <ClInclude Include="api\fastcall.h" />
+    <ClInclude Include="api\vectors.h" />
+    <ClInclude Include="Hacks\GrenadeHelper\GrenadeHelper.h" />
+    <ClInclude Include="Hacks\aim\aimbot.h" />
+    <ClInclude Include="Hooks\dme.h" />
+    <ClInclude Include="Hooks\fsn.h" />
+    <ClInclude Include="Hooks\emitsound.h" />
+    <ClInclude Include="api\crypt\base64.h" />
+    <ClInclude Include="api\crypt\crypt.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Engine">
+      <UniqueIdentifier>{54d00573-2776-465b-b25b-9a7075dd6ad0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GUI">
+      <UniqueIdentifier>{5469e5ef-ba8f-4479-957a-0df23767e35c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Hacks">
+      <UniqueIdentifier>{f158a8e0-589e-492d-993d-07cbc54f348a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Hooks">
+      <UniqueIdentifier>{d2246155-574c-4ddd-a646-49b346f93fee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Include">
+      <UniqueIdentifier>{95fd6b9d-2420-4b43-96d3-1c736210554e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Initialize">
+      <UniqueIdentifier>{05726939-1977-4ef5-abd2-0f1c7ceaac1b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Json">
+      <UniqueIdentifier>{edbe6c75-697e-470e-9492-1699cf54f433}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Render">
+      <UniqueIdentifier>{6829291e-bd1c-490f-b9e3-d3c354a73b44}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="X1API">
+      <UniqueIdentifier>{03f37b99-d864-4887-b758-d00979202e74}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\SDK">
+      <UniqueIdentifier>{97b1749c-5e42-448b-b981-b9cf247b387a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Hacks\Esp">
+      <UniqueIdentifier>{24a95fe6-0d0d-475b-92df-5553513e7e67}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Hacks\GrenadeHelper">
+      <UniqueIdentifier>{93bb9c82-8fee-40b6-a5ef-15c8fdabc982}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Hacks\Inventory">
+      <UniqueIdentifier>{fe3cc4f8-200b-4a56-bb0c-d9aecc745ae7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Hacks\LegitAim">
+      <UniqueIdentifier>{98cb73d1-5a72-4676-92fd-40d85dd4cfa3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Hacks\Misc">
+      <UniqueIdentifier>{ac1168f0-1f5d-4f65-b11d-0b0fc8990ee4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Hacks\Radar">
+      <UniqueIdentifier>{c3e1acb4-5ac6-417b-819f-8ee740bb7810}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Hacks\Skins">
+      <UniqueIdentifier>{1004cc64-aaa1-463e-aeba-e59316916888}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="X1API\MinHook">
+      <UniqueIdentifier>{8f23c2de-3e77-4f75-9da6-18e544a211e2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="X1API\MinHook\src">
+      <UniqueIdentifier>{f2ba0c36-3b19-4f05-a5b9-00d93561e787}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="X1API\MinHook\src\HDE">
+      <UniqueIdentifier>{6f2f22a6-956c-4606-b3e5-34db17ecbb39}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Render\DirectData">
+      <UniqueIdentifier>{40352bc6-5cd0-45a3-8117-5d9088ffeb48}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Render\Fonts">
+      <UniqueIdentifier>{9822342e-ddcc-4969-8b0d-f4b859c4b736}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="steam_sdk">
+      <UniqueIdentifier>{b4dc45bb-b5aa-490f-be49-2cf3b966efbb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="VMP">
+      <UniqueIdentifier>{929dde5c-7916-4e50-85be-59b2697f5b0d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="X1API\Hide">
+      <UniqueIdentifier>{dfbbe952-7a30-4e4e-80ed-8f7a01c7af4f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="protobuf">
+      <UniqueIdentifier>{0d6f2192-ef48-4224-b299-48a3df172849}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Utils">
+      <UniqueIdentifier>{45881dc7-a42b-425c-9494-7ff37ac1463f}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="api\detours.lib" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="steam_sdk\steam_api.json" />
+    <None Include="steam_sdk\steam_api_interop.cs" />
+  </ItemGroup>
+</Project>
