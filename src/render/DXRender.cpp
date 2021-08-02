@@ -1,7 +1,7 @@
 #include "DXRender.h"
 #include "../GUI/Gui.h"
-#include "Fonts/Arial.h"
 #include "Fonts/WeaponIcons.h"
+#include "Fonts/Tahoma.h"
 
 IDirect3DDevice9* g_pDevice = NULL;
 
@@ -226,7 +226,7 @@ void CRender::IRender::UpdateSzFonts()
 	//SzFonts[17] = SzFonts[17]->CreateFontFromCompressMemory(Arial_compressed_data, Arial_compressed_size, (float)17, &font_config, ranges);
 	for (int i(9); i < MAX_FONT_SIZE+1; i++)
 	{
-		SzFonts[i] = SzFonts[i]->CreateFontFromCompressMemory(Arial_compressed_data, Arial_compressed_size, (float)i, &font_config, ranges);
+		SzFonts[i] = SzFonts[i]->CreateFontFromCompressMemory(Tahoma_compressed_data, Tahoma_compressed_size, (float)i, &font_config, ranges);
 	}
 
 	for (int i(9); i < MAX_FONT_SIZE+1; i++)

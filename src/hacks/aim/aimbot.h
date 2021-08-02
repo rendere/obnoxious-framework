@@ -13,14 +13,6 @@
 #define _180_PI 57.324840764331210191082802547771
 #define PI 3.14159265 
 
-namespace HookTables
-{
-	using DrawModelExecuteFn = void(__thiscall*)(void*, IMatRenderContext*, const DrawModelState_t&,
-		const ModelRenderInfo_t&, matrix3x4_t*);
-	extern cDetour<DrawModelExecuteFn>* pDrawModelExecute;
-}
-using namespace HookTables;
-
 namespace Engin
 {
 	class CBaseEntity;
@@ -101,48 +93,45 @@ public:
 
 };
 
-class ILegitAim
+class IAimbot
 {
 protected:
 
 	virtual void SaveWeapons(nlohmann::json &j) = 0;
 	virtual void LoadWeapons(nlohmann::json &j) = 0;
 	virtual void InitConVar() = 0;
-	virtual void BacktrackCreateMoveEP(CUserCmd* pCmd) = 0;
 	virtual void TriggerCreateMove(CUserCmd* pCmd) = 0;
 	virtual void TriggerGetBestTarget(Vector mAngle) = 0;
 	virtual bool CheckOpportWork(CUserCmd* pCmd) = 0;
-	virtual bool GetBestTarget(bool CheckSilent) = 0;
-	virtual bool GetBestHitBox(bool CheckSilent, bool CheckBackTrack = false) = 0;
+	virtual bool GetBestTarget() = 0;
+	virtual bool GetBestHitBox() = 0;
 	virtual void SetMainParams() = 0;
 	virtual void CalcAutoPistol(CUserCmd* cmd, CBaseEntity * pLocal) = 0;
 	virtual void StandeloneRCS(CUserCmd* pCmd) = 0;
-	virtual void CalcFinalVecRcs(bool _CheckSilent) = 0;
+	virtual void CalcFinalVecRcs() = 0;
 	virtual void MakeVector(const Vector& vIn, Vector& vOut) = 0;
-	virtual void CreateAssistMove(Vector TargetAng, bool IsSilent = false) = 0;
+	virtual void CreateAssistMove(Vector TargetAng) = 0;
 	virtual void VixViewAng(Vector &VE) = 0;
 
 	virtual void Menu() = 0;
 	virtual void SubsectionsMenu() = 0;
 	virtual void Draw() = 0;
-	virtual void DrawModelExecute(void* thisptr, IMatRenderContext* ctx, const DrawModelState_t& state, const ModelRenderInfo_t& pInfo, matrix3x4_t* pCustomBoneToWorld) = 0;
 	virtual void CreateMove(bool &bSendPacket, float flInputSampleTime, CUserCmd* pCmd) = 0;
 	virtual void SetSelectedWeapon(bool MenuCheck = true) = 0;
 	virtual void TriggerRCS(int X, int Y, CUserCmd* pCmd, bool Enable) = 0;
 	virtual bool __declspec(noinline) CanFire(Vector mAngle, CUserCmd* pCmd, CBaseEntity* BaseEnt, int BestInd, CBaseEntity* Local, bool AllHitGroup) = 0;
 	virtual float CalcFOV(Vector& viewangles, const Vector& vSrc, const Vector& vEnd) = 0;
-	virtual Vector Smooth(Vector& viewangles, Vector target, float factor, bool silent) = 0;
+	virtual Vector Smooth(Vector& viewangles, Vector target, float factor) = 0;
 	virtual Vector PlayerAnglToScreen(Vector Angl) = 0;
 	virtual Vector CalculateAngle(const Vector& in, Vector out) = 0;
 	virtual float Rad2Deg(float x) = 0;
 	virtual float Deg2Rad(float x) = 0;
 	virtual bool IsNonAimWeapon() = 0;
 	virtual bool CanShoot() = 0;
-	virtual bool IsEnableSilent() = 0;
 	virtual bool IsEnableRCS() = 0;
 };
 
-class CAimbot : public ILegitAim
+class CAimbot : public IAimbot
 {
 public:
 
@@ -151,15 +140,12 @@ public:
 	virtual void Menu();
 	virtual void SubsectionsMenu();
 	virtual void Draw();
-	virtual void DrawModelExecute(void* thisptr, IMatRenderContext* ctx, const DrawModelState_t& state, const ModelRenderInfo_t& pInfo, matrix3x4_t* pCustomBoneToWorld);
 	virtual void CreateMove(bool &bSendPacket, float flInputSampleTime, CUserCmd* pCmd);
 	virtual void SetSelectedWeapon(bool MenuCheck = true);
 	virtual void SaveWeapons(nlohmann::json &j);
 	virtual void LoadWeapons(nlohmann::json &j);
 
 	virtual void InitConVar();
-	virtual void BacktrackCreateMoveEP(CUserCmd* pCmd);
-
 	virtual void TriggerCreateMove(CUserCmd* pCmd);
 	virtual void TriggerGetBestTarget(Vector mAngle);
 	virtual void TriggerRCS(int X, int Y, CUserCmd* pCmd, bool Enable);
@@ -229,14 +215,6 @@ public:
 	};
 	LegitAimConVar cvars;
 
-	struct BacktrackData
-	{
-		Vector origin;
-		float simtime;
-		Vector hitboxPos;
-		matrix3x4_t matrix[256];
-	};
-	std::map<int, std::deque<BacktrackData>> records;
 
 	struct CustomSub
 	{
@@ -257,17 +235,6 @@ public:
 		float EndAcceleration = 65;
 
 		bool Active = true;
-
-		/*Silent*/
-		bool Silent = false;
-		float SilentFov = 20;
-		int SilentHitBox = 0;
-		bool SilentNearest = false;
-		int  SilentHitchance = 100;
-
-		int SilentStartBullet = 0;
-		int SilentEndBullet = 1;
-		/*=======*/
 
 		int FovPos = 1;
 
@@ -322,10 +289,6 @@ public:
 		int TriggerRcsY = 0;
 		float TriggerDelay = 0;
 
-		bool Backtrack = false;
-		bool BacktrackIgnoreSmoke = false;
-		int BacktrackTimeLimit = 0;
-
 #define CHECK_VAR(l) if(l != src.##l) return false;
 		bool operator==(const WeaponSettings& src) const
 		{
@@ -334,13 +297,6 @@ public:
 			CHECK_VAR(StartAcceleration);
 			CHECK_VAR(EndAcceleration);
 			CHECK_VAR(Active);
-			CHECK_VAR(Silent);
-			CHECK_VAR(SilentFov);
-			CHECK_VAR(SilentHitBox);
-			CHECK_VAR(SilentNearest);
-			CHECK_VAR(SilentHitchance);
-			CHECK_VAR(SilentStartBullet);
-			CHECK_VAR(SilentEndBullet);
 			CHECK_VAR(FovPos);
 			CHECK_VAR(Smooth);
 			CHECK_VAR(Fov);
@@ -379,8 +335,6 @@ public:
 			CHECK_VAR(TriggerChanse);
 			CHECK_VAR(TriggerRcsX);
 			CHECK_VAR(TriggerDelay);
-			CHECK_VAR(Backtrack);
-			CHECK_VAR(BacktrackTimeLimit);
 			CHECK_VAR(SmoothMoveFactor);
 
 			return true;
@@ -426,7 +380,6 @@ public:
 		pOldBestTarget = nullptr;
 		pLocalPlayer = nullptr;
 		pLocalWeapon = nullptr;
-		pBestBacktrackTarget = nullptr;
 
 
 		RV(WeaponCustomTypes, "WeaponCustomTypes");
@@ -442,12 +395,6 @@ public:
 		RV(DrawSilentFov, "DrawSilentFov");
 		RV(FovColor, "FovColor");
 		RV(SilentFovColor, "SilentFovColor");
-		RV(ShowBacktrack, "ShowBacktrack");
-		RV(SBVisibleOnly, "SBVisibleOnly");
-		RV(SBTick, "SBTick");
-		RV(SBStyle, "SBStyle");
-		RV(SBDouble, "SBDouble");
-		RV(ShowBactrackColor, "ShowBactrackColor");
 		RV(ShowSpot, "ShowSpot");
 		RV(FaceIt, "FaceIt");
 		RV(EntityAim, "EntityAim");
@@ -473,15 +420,7 @@ public:
 	CBaseEntity *pOldBestTarget;
 	CBaseEntity *pLocalPlayer;
 	CBaseWeapon *pLocalWeapon;
-	CBaseEntity *pBestBacktrackTarget;
 
-	//bool BacktrackFakeLatency = false;
-	bool ShowBacktrack = false;
-	bool SBVisibleOnly = false;
-	int SBTick = 0;
-	int SBStyle = 0;
-	int SBDouble = 0;
-	Color ShowBactrackColor = Color(255, 255, 255, 255);
 
 	virtual float CalcFOV(Vector& viewangles, const Vector& vSrc, const Vector& vEnd);
 
@@ -492,14 +431,13 @@ private:
 
 	Vector MyEyeAng = Vector(0, 0, 0);
 	Vector BestHitBoxPos = Vector(0, 0, 0);
-	Vector SilentBestHitBoxPos = Vector(0, 0, 0);
 	Vector FinalVec = Vector(0, 0, 0);
 	Vector PreVec = Vector(0, 0, 0);
 	Vector SilentFinalVec = Vector(0, 0, 0);
 	Vector SilentPreVec = Vector(0, 0, 0);
 	Vector FovStartAng = Vector(0, 0, 0);
 	Vector AimPunchAngle = Vector(0, 0, 0);
-	virtual Vector Smooth(Vector& viewangles, Vector target, float factor, bool silent);
+	virtual Vector Smooth(Vector& viewangles, Vector target, float factor);
 	Vector AssistScreenPoint = Vector(0, 0, 0);
 	Vector NewMouseOfstPos = Vector(0, 0, 0);
 	Vector MousePos = Vector(0, 0, 0);
@@ -516,8 +454,6 @@ private:
 
 	int iBestTarget = 0;
 	int iBestHitBox = 0;
-	int iSilentBestTarget = 0;
-	int iSilentBestHitBox = 0;
 	int FovPos = 0;
 	int iBestBone = 0;
 	int CurWeaponID = 0;
@@ -528,9 +464,6 @@ private:
 	int RCS_X = 0;
 	int RCS_Y = 0;
 	int iLastBestHitBox = 0;
-	int iLastSilentBestHitBox = 0;
-	int iBackTrackBestSimTime = 0;
-	int iBackTrackbestTarget = -1;
 	int AimMethod = 0;
 	int SmoothMethod = 0;
 	int SmoothMF = 0;
@@ -560,9 +493,6 @@ private:
 	bool FFAutoDelay = false;
 	bool FFAutoDelayEnable = false;
 	bool FFAutoDelayDisable = false;
-	bool pSilentAutoDelay = false;
-	bool pSilentAutoDelayEnable = false;
-	bool pSilentAutoDelayDisable = false;
 	bool KillStop = false;
 	bool KillStopEnable = false;
 	bool FFDelayOneClickEnable = false;
@@ -579,11 +509,10 @@ private:
 	bool AimWorking = false;
 	virtual bool IsNonAimWeapon();
 	virtual bool CanShoot();
-	virtual bool IsEnableSilent();
 	virtual bool IsEnableRCS();
 	virtual bool CheckOpportWork(CUserCmd* pCmd);
-	virtual bool GetBestTarget(bool CheckSilent);
-	virtual bool GetBestHitBox(bool CheckSilent, bool CheckBackTrack = false);
+	virtual bool GetBestTarget();
+	virtual bool GetBestHitBox();
 
 	bool SetSmoothStart = false;
 	bool FaceItMode = false;
@@ -595,8 +524,8 @@ private:
 	virtual void SetMainParams();
 	virtual void CalcAutoPistol(CUserCmd* cmd, CBaseEntity * pLocal);
 	virtual void StandeloneRCS(CUserCmd* pCmd);
-	virtual void CalcFinalVecRcs(bool _CheckSilent);
+	virtual void CalcFinalVecRcs();
 	virtual void MakeVector(const Vector& vIn, Vector& vOut);
-	virtual void CreateAssistMove(Vector TargetAng, bool IsSilent = false);
+	virtual void CreateAssistMove(Vector TargetAng);
 	virtual void VixViewAng(Vector &VE);
 };

@@ -3,7 +3,6 @@
 #include "Esp/Esp.h"
 #include "aim/aimbot.h"
 #include "Misc/Misc.h"
-#include "Radar/Radar.h"
 #include "Skins/Skins.h"
 #include "Inventory/Inventory.h"
 #include "grenadehelper/grenadehelper.h"
@@ -35,7 +34,6 @@ extern CEntityPlayers*		GP_EntPlayers;
 extern CEsp*				GP_Esp;
 extern CMisc*				GP_Misc;
 extern CAimbot*			GP_LegitAim;
-extern CRadar*				GP_Radar;
 extern CSkins*				GP_Skins;
 #ifdef ENABLE_INVENTORY
 extern CInventory*          GP_Inventory;
@@ -58,7 +56,6 @@ public:
 			GP_Esp =		new CEsp();
 			GP_Misc =		new CMisc();
 			GP_LegitAim =	new CAimbot();
-			GP_Radar =		new CRadar();
 			GP_Skins =		new CSkins();
 #ifdef ENABLE_INVENTORY
 			GP_Inventory =  new CInventory();
@@ -67,16 +64,13 @@ public:
 			GP_Main =       new CMain();
 			debug_log("2-1-11-7-1\n");
 			CGSettings::G().UpdateList();
-			GP_Misc->UpdateSoundList();
 			debug_log("2-1-11-7-2\n");
 			GP_Esp->InitVisuals();
-			GP_Esp->InitMaterials();
 			GP_LegitAim->InitConVar();
 			GP_Render->Initialize();
 			GP_GHelper->Initialize();
 			debug_log("2-1-11-7-3\n");
 #ifndef ONLY_DRAW_HOOK
-			GP_Misc->HitWorker.RegListener();
 			GP_Skins->FireEvent.RegListener();
 			GP_Skins->initialize_kits();
 			GP_Skins->ParseSortedKits();
@@ -94,7 +88,6 @@ public:
 		{
 			HookTables::Shutdown();
 
-			GP_Misc->HitWorker.UnRegListener();
 			GP_Skins->FireEvent.UnRegListener();
 
 			DELETE_PTR(GP_Render);
@@ -102,7 +95,6 @@ public:
 			DELETE_PTR(GP_Esp);
 			DELETE_PTR(GP_Misc);
 			DELETE_PTR(GP_LegitAim);
-			DELETE_PTR(GP_Radar);
 			DELETE_PTR(GP_Skins);
 #ifdef ENABLE_INVENTORY
 			DELETE_PTR(GP_Inventory);

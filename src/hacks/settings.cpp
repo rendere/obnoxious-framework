@@ -36,9 +36,6 @@ void CGSettings::SaveEx(nlohmann::json &j)
 	if (GP_Misc)
 		GP_Misc->Config.Save(j);
 
-	if (GP_Radar)
-		GP_Radar->Config.Save(j);
-
 	if (GP_Skins)
 	{
 		GP_Skins->Config.Save(j);
@@ -74,9 +71,6 @@ void CGSettings::LoadEx(nlohmann::json &j)
 
 	if (GP_Misc)
 		GP_Misc->Config.Load(j);
-
-	if (GP_Radar)
-		GP_Radar->Config.Load(j);
 
 	if (GP_Skins)
 	{
@@ -139,9 +133,6 @@ void CGSettings::UpdateColors()
 
 	if (GP_Misc)
 		GP_Misc->Config.UpdateColors();
-
-	if (GP_Radar)
-		GP_Radar->Config.UpdateColors();
 
 	if (GP_Main)
 		GP_Main->Config.UpdateColors();
@@ -214,7 +205,6 @@ void CGSettings::Menu()
 				ConfigSelect = i;
 			tahaGUI().Separator();
 		}
-		tahaGUI().VerticalSeparator(230.f);
 	}
 	tahaGUI().ListBoxFooter();
 
@@ -229,63 +219,48 @@ void CGSettings::Menu()
 	string SettignBaseDir = CGlobal::SystemDisk + __xor("obnoxious\\Configurations\\");
 	string SettingsFormat = __xor(".json");
 
-	auto CheckRus = [&](string& check)-> bool
+	if (tahaGUI().Button(__xor("create & save new config")))
 	{
-		string alph_rus = __xor("АаБбВвГгДдЕеЁёЖжЗзИиЙйКкЛлМмНнОоПпРрСсТтУуФфХхЦцЧчШшЩщЪъЫыЬьЭэЮюЯя");
+		string ConfigFileName = NewConfigName;
 
-		for (auto& v_check : check)
-			for (auto& v_rus : alph_rus)
-				if (v_check == v_rus)
-					return true;
-
-		return false;
-	};
-
-	if (tahaGUI().Button(__xor("Create & save new config")))
-	{
-		if (!CheckRus(string(NewConfigName)))
+		if (ConfigFileName.size() < 1)
 		{
-			string ConfigFileName = NewConfigName;
-
-			if (ConfigFileName.size() < 1)
-			{
-				ConfigFileName = __xor("Settings");
-			}
-
-			SetName(SettignBaseDir + ConfigFileName + SettingsFormat);
-
-			if (Save(ConfigFileName + SettingsFormat))
-				Message::Get().Start(__xor("Config saved"));
-			else
-				Message::Get().Start(__xor("Save error"));
-
-			UpdateList();
-			strcpy(NewConfigName, "");
+			ConfigFileName = __xor("default");
 		}
+
+		SetName(SettignBaseDir + ConfigFileName + SettingsFormat);
+
+		if (Save(ConfigFileName + SettingsFormat))
+			Message::Get().Start(__xor("config saved"));
+		else
+			Message::Get().Start(__xor("save error"));
+
+		UpdateList();
+		strcpy(NewConfigName, "");
 	}
 	tahaGUI().Spacing();
 	tahaGUI().Separator();
 	tahaGUI().Spacing();
 
-	if (tahaGUI().Button(__xor("Update configs list"), Vec2(long_item_w, 0)))
+	if (tahaGUI().Button(__xor("update configs list"), Vec2(long_item_w, 0)))
 	{
 		UpdateList();
-		Message::Get().Start(__xor("List updated"));
+		Message::Get().Start(__xor("list updated"));
 	}
 
 	tahaGUI().Spacing();
 	tahaGUI().Separator();
 	tahaGUI().Spacing();
 
-	if (tahaGUI().Button(__xor("Load config"), Vec2(long_item_w, 0)))
+	if (tahaGUI().Button(__xor("load config"), Vec2(long_item_w, 0)))
 	{
 		if (ConfigSelect >= 0 && ConfigSelect < (int)AllSettings.size())
 		{
 			SetName(SettignBaseDir + AllSettings[ConfigSelect].name);
 			if (Load())
-				Message::Get().Start(__xor("Config loaded"));
+				Message::Get().Start(__xor("config loaded"));
 			else
-				Message::Get().Start(__xor("Load error"));
+				Message::Get().Start(__xor("load error"));
 		}
 	}
 	tahaGUI().Spacing();

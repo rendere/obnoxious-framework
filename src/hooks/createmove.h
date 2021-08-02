@@ -48,9 +48,6 @@ bool __stdcall hkCreateMove(float flInputSampleTime, CUserCmd* pCmd)
 
 		EnginePrediction::Run(pCmd);
 		{
-			if (GP_LegitAim)
-				GP_LegitAim->BacktrackCreateMoveEP(pCmd);
-
 			if (GP_Misc)
 				GP_Misc->CreateMoveEP(bSendPacket, pCmd);
 

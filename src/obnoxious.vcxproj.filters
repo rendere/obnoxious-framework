@@ -118,12 +118,6 @@
     <ClCompile Include="Render\DXRender.cpp" />
     <ClCompile Include="Render\DXRenderDraw.cpp" />
     <ClCompile Include="Render\DXRenderInit.cpp" />
-    <ClCompile Include="Hacks\Radar\Radar.cpp">
-      <Filter>Hacks\Radar</Filter>
-    </ClCompile>
-    <ClCompile Include="Hacks\Radar\RadarMenu.cpp">
-      <Filter>Hacks\Radar</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\Utils\Utils.cpp">
       <Filter>Engine\Utils</Filter>
     </ClCompile>
@@ -147,6 +141,20 @@
     </ClCompile>
     <ClCompile Include="Engine\EnginePrediction.cpp" />
     <ClCompile Include="Engine\SDK\Vector.cpp" />
+    <ClCompile Include="api\Hide\cHide.cpp" />
+    <ClCompile Include="hacks\esp\custom_visuals.cpp" />
+    <ClCompile Include="Hacks\Esp\player_esp.cpp" />
+    <ClCompile Include="Hacks\Esp\world_esp.cpp" />
+    <ClCompile Include="Hacks\GrenadeHelper\grenadehelper.cpp" />
+    <ClCompile Include="Hacks\GrenadeHelper\grenadehelpermenu.cpp" />
+    <ClCompile Include="Hacks\aim\aimbot.cpp" />
+    <ClCompile Include="Hacks\aim\aimbotmenu.cpp" />
+    <ClCompile Include="Hacks\Misc\miscmenu.cpp" />
+    <ClCompile Include="Hacks\Skins\kit_parser.cpp" />
+    <ClCompile Include="Hacks\Skins\skinsmenu.cpp" />
+    <ClCompile Include="hacks\esp\espmenu.cpp" />
+    <ClCompile Include="api\crypt\base64.cpp" />
+    <ClCompile Include="api\crypt\crypt.cpp" />
     <ClCompile Include="protobuf\base_gcmessages.pb.cc" />
     <ClCompile Include="protobuf\cstrike15_gcmessages.pb.cc" />
     <ClCompile Include="protobuf\econ_gcmessages.pb.cc" />
@@ -159,21 +167,7 @@
     <ClCompile Include="protobuf\steamdatagram_messages.pb.cc" />
     <ClCompile Include="protobuf\steammessages.pb.cc" />
     <ClCompile Include="Hacks\Inventory\Inventory.cpp" />
-    <ClCompile Include="api\Hide\cHide.cpp" />
-    <ClCompile Include="hacks\esp\custom_visuals.cpp" />
-    <ClCompile Include="Hacks\Esp\player_esp.cpp" />
-    <ClCompile Include="Hacks\Esp\world_esp.cpp" />
-    <ClCompile Include="Hacks\GrenadeHelper\grenadehelper.cpp" />
-    <ClCompile Include="Hacks\GrenadeHelper\grenadehelpermenu.cpp" />
     <ClCompile Include="Hacks\Inventory\inventorymenu.cpp" />
-    <ClCompile Include="Hacks\aim\aimbot.cpp" />
-    <ClCompile Include="Hacks\aim\aimbotmenu.cpp" />
-    <ClCompile Include="Hacks\Misc\miscmenu.cpp" />
-    <ClCompile Include="Hacks\Skins\kit_parser.cpp" />
-    <ClCompile Include="Hacks\Skins\skinsmenu.cpp" />
-    <ClCompile Include="hacks\esp\espmenu.cpp" />
-    <ClCompile Include="api\crypt\base64.cpp" />
-    <ClCompile Include="api\crypt\crypt.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h" />
@@ -263,9 +257,6 @@
     </ClInclude>
     <ClInclude Include="Render\DirectData\Present.h">
       <Filter>Render\DirectData</Filter>
-    </ClInclude>
-    <ClInclude Include="Render\Fonts\Arial.h">
-      <Filter>Render\Fonts</Filter>
     </ClInclude>
     <ClInclude Include="Render\Fonts\stb_rect_pack.h">
       <Filter>Render\Fonts</Filter>
@@ -499,9 +490,6 @@
     <ClInclude Include="Render\DXFont.h" />
     <ClInclude Include="Render\DXOverlayManager.h" />
     <ClInclude Include="Render\DXRender.h" />
-    <ClInclude Include="Hacks\Radar\Radar.h">
-      <Filter>Hacks\Radar</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\SDK\CInput.hpp">
       <Filter>Engine\SDK</Filter>
     </ClInclude>
@@ -674,6 +662,17 @@
     <ClInclude Include="Engine\SDK\Cvar.h" />
     <ClInclude Include="Engine\SDK\CUtlMemory.h" />
     <ClInclude Include="Engine\SDK\CUtlVector.h" />
+    <ClInclude Include="api\detours.h" />
+    <ClInclude Include="api\Hide\cHide.h" />
+    <ClInclude Include="api\ThreadInMemory.h" />
+    <ClInclude Include="api\fastcall.h" />
+    <ClInclude Include="api\vectors.h" />
+    <ClInclude Include="Hacks\GrenadeHelper\GrenadeHelper.h" />
+    <ClInclude Include="Hacks\aim\aimbot.h" />
+    <ClInclude Include="Hooks\fsn.h" />
+    <ClInclude Include="Hooks\emitsound.h" />
+    <ClInclude Include="api\crypt\base64.h" />
+    <ClInclude Include="api\crypt\crypt.h" />
     <ClInclude Include="protobuf\base_gcmessages.pb.h" />
     <ClInclude Include="protobuf\cstrike15_gcmessages.pb.h" />
     <ClInclude Include="protobuf\econ_gcmessages.pb.h" />
@@ -686,18 +685,6 @@
     <ClInclude Include="protobuf\steamdatagram_messages.pb.h" />
     <ClInclude Include="protobuf\steammessages.pb.h" />
     <ClInclude Include="Hacks\Inventory\Inventory.h" />
-    <ClInclude Include="api\detours.h" />
-    <ClInclude Include="api\Hide\cHide.h" />
-    <ClInclude Include="api\ThreadInMemory.h" />
-    <ClInclude Include="api\fastcall.h" />
-    <ClInclude Include="api\vectors.h" />
-    <ClInclude Include="Hacks\GrenadeHelper\GrenadeHelper.h" />
-    <ClInclude Include="Hacks\aim\aimbot.h" />
-    <ClInclude Include="Hooks\dme.h" />
-    <ClInclude Include="Hooks\fsn.h" />
-    <ClInclude Include="Hooks\emitsound.h" />
-    <ClInclude Include="api\crypt\base64.h" />
-    <ClInclude Include="api\crypt\crypt.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Engine">

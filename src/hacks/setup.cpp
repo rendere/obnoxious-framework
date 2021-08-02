@@ -6,69 +6,9 @@ CEntityPlayers*		GP_EntPlayers = nullptr;
 CEsp*				GP_Esp = nullptr;
 CMisc*				GP_Misc = nullptr;
 CAimbot*			GP_LegitAim = nullptr;
-CRadar*				GP_Radar = nullptr;
 CSkins*				GP_Skins = nullptr;
 #ifdef ENABLE_INVENTORY
 CInventory*         GP_Inventory = nullptr;
 #endif
 CGHelper*			GP_GHelper = nullptr;
 CMain*              GP_Main = nullptr;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

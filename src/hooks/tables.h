@@ -15,8 +15,6 @@ namespace HookTables
 	using GetViewModelFOVFn = float(__stdcall*)();
 	using FrameStageNotifyFn = void(__thiscall*)(void*, ClientFrameStage_t);
 	using FireEventClientSideThinkFn = bool(__thiscall*)(void*, IGameEvent*);
-	using DrawModelExecuteFn = void(__thiscall*)(void*, IMatRenderContext*, const DrawModelState_t&,
-		const ModelRenderInfo_t&, matrix3x4_t*);
 	using LockCursorFn = bool(__thiscall*)(void*);
 	using PostDataUpdateFn = void(__stdcall*)(void*, int);
 	using EmitSoundFn = void(__fastcall*)(IEngineSound*, int, IRecipientFilter&, int, int, const char*, 
@@ -40,7 +38,6 @@ namespace HookTables
 	cDetour<GetViewModelFOVFn>* pGetViewModelFOV;
 	cDetour<FrameStageNotifyFn>* pFrameStageNotify;
 	cDetour<FireEventClientSideThinkFn>* pFireEventClientSideThink;
-	cDetour<DrawModelExecuteFn>* pDrawModelExecute;
 	cDetour<LockCursorFn>* pLockCursor;
 	cDetour<PostDataUpdateFn>* pPostDataUpdate;
 	cDetour<EmitSoundFn>* pEmitSound;
@@ -68,7 +65,6 @@ namespace HookTables
 		pGetViewModelFOV->Remove();
 		pFrameStageNotify->Remove();
 		pFireEventClientSideThink->Remove();
-		pDrawModelExecute->Remove();
 		pLockCursor->Remove();
 		pPostDataUpdate->Remove();
 		pEmitSound->Remove();

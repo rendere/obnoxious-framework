@@ -152,7 +152,7 @@ void CAimbot::Menu()
 	}
 	tahaGUI().EndChild();
 
-	VectorEx<const char*> AimPSettings = { lolc("Basic"), lolc("RCS"), lolc("Silent"), lolc("Backtrack"), lolc("Delays") };
+	VectorEx<const char*> AimPSettings = { lolc("Basic"), lolc("RCS"), lolc("Delays") };
 
 	TabsLabels(SubTabAimSelected, AimPSettings, Vec2(long_item_w - 9, 0), false);
 
@@ -251,74 +251,6 @@ void CAimbot::Menu()
 			tahaGUI().PushItemWidth(333.f);
 		}
 		else if (SubTabAimSelected == 2)
-		{
-			if (!FaceIt)
-			{
-				DCheckBox("Silent", Weapons[GetWeap(SelectedWeapon)].Silent);
-
-				SliderInts("% chance", Weapons[GetWeap(SelectedWeapon)].SilentHitchance, 0, 100);
-				SliderFloats("FOV", Weapons[GetWeap(SelectedWeapon)].SilentFov, 0, 30,);
-
-				tahaGUI().Spacing();
-				tahaGUI().Separator();
-				tahaGUI().Spacing();
-
-				SliderInts("Start bullet##Silent", Weapons[GetWeap(SelectedWeapon)].SilentStartBullet, 0, 100);
-				SliderInts("End bullet##Silent", Weapons[GetWeap(SelectedWeapon)].SilentEndBullet, 0, 100);
-
-				if (!EntityAim)
-				{
-					tahaGUI().Spacing();
-					tahaGUI().Separator();
-					tahaGUI().Spacing();
-
-					DCheckBox("Nearest", Weapons[GetWeap(SelectedWeapon)].SilentNearest);
-
-					if (!Weapons[GetWeap(SelectedWeapon)].SilentNearest)
-					{
-						VectorEx<const char*> itemsHB = { lolc("Head"), lolc("Neck"), lolc("Low neck"),
-							lolc("Body"), lolc("Thorax"), lolc("Chest") };
-						DComboBox("Hitbox", Weapons[GetWeap(SelectedWeapon)].SilentHitBox, itemsHB);
-					}
-
-					tahaGUI().Spacing();
-					tahaGUI().Spacing();
-				}
-			}
-		}
-		else if (SubTabAimSelected == 3)
-		{
-			if (!FaceIt)
-			{
-				DCheckBox("Backtrack", Weapons[GetWeap(SelectedWeapon)].Backtrack);
-				tahaGUI().SameLine();
-				DCheckBox("Ignore smoke##Backtrack", Weapons[GetWeap(SelectedWeapon)].BacktrackIgnoreSmoke);
-
-				SliderInts("Time (Ms)##Backtrack", Weapons[GetWeap(SelectedWeapon)].BacktrackTimeLimit, 0, 200);
-
-				tahaGUI().Spacing();
-				tahaGUI().Separator();
-				tahaGUI().Spacing();
-				DCheckBox("Show Backtrack", ShowBacktrack);
-				if (ShowBacktrack)
-				{
-					tahaGUI().SameLine();
-					DCheckBox("Visible Only##ShowBacktrack", SBVisibleOnly);
-
-					VectorEx<const char*> itemsSBT = { lolc("All Ticks"), lolc("Last Tick") };
-					DComboBox("Tick##ShowBacktrack", SBTick, itemsSBT);
-
-					VectorEx<const char*>itemsSBS = { lolc("Textured"), lolc("Flat"), lolc("Metallic"), lolc("Metallic Plus"), lolc("Pearlescent"), lolc("Animated") };
-					DComboBox("Style##ShowBacktrack", SBStyle, itemsSBS);
-
-					VectorEx<const char*>itemsSBD = { lolc("None"), lolc("Wireframe") };
-					DComboBox("Double##ShowBacktrack", SBDouble, itemsSBD);
-
-					DColorEdit("Color##ShowBacktrack", ShowBactrackColor);
-				}
-			}
-		}
-		else if (SubTabAimSelected == 4)
 		{
 			DCheckBox("Target switch delay", Weapons[GetWeap(SelectedWeapon)].TargetSwitchDelayEnable);
 

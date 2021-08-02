@@ -6,12 +6,6 @@
 
 #define DORMANT_TIME 0.37f
 
-namespace HookTables
-{
-	using DrawModelExecuteFn = void(__thiscall*)(void*, IMatRenderContext*, const DrawModelState_t&,
-		const ModelRenderInfo_t&, matrix3x4_t*);
-	extern cDetour<DrawModelExecuteFn>* pDrawModelExecute;
-}
 
 class ISoundEsp
 {
@@ -48,7 +42,6 @@ public:
 	virtual void DrawPlayerEx(CEntityPlayer* Entity, CEntityPlayer* Local, bool IsDormant) = 0;
 	virtual void DrawSkeletonLine(int point1, int point2, CEntityPlayer* Entity) = 0;
 	virtual void Draw3DBox(CEntityPlayer* Entity, Color color) = 0;
-	virtual void InitMaterials() = 0;
 
 	vector<float> OldAlphs;
 };
@@ -154,9 +147,6 @@ public:
 	virtual void DrawPlayerEx(CEntityPlayer* Entity, CEntityPlayer* Local, bool IsDormant);
 	virtual void DrawSkeletonLine(int point1, int point2, CEntityPlayer* Entity);
 	virtual void Draw3DBox(CEntityPlayer* Entity, Color color);
-	virtual void InitMaterials();
-	virtual void OverrideMaterial(bool IgnoreZ, int dMaterial, int Type, Color RGBA, bool Glow = false, const float Pulse = 0);
-	virtual void DrawModelExecute(void* thisptr, IMatRenderContext* ctx, const DrawModelState_t& state, const ModelRenderInfo_t& pInfo, matrix3x4_t* pCustomBoneToWorld);
 
 	void PlaySounds(Vector _Pos, int EntityIdx);
 	void Reset();
@@ -173,16 +163,6 @@ public:
 
 	void Menu();
 
-	/*Material for chams/glow*/
-	IMaterial* Texture = nullptr;
-	IMaterial* Flat = nullptr;
-	IMaterial* Metallic = nullptr;
-	IMaterial* MetallicPlus = nullptr;
-	IMaterial* Pearlescent = nullptr;
-	IMaterial* Animated = nullptr;
-	IMaterial* GlowDef = nullptr;
-	IMaterial* GlowSPulse = nullptr;
-	IMaterial* GlowDPulse = nullptr;
 	/*=======================*/
 
 	bool ShowPreview = true;
@@ -199,15 +179,6 @@ public:
 	int BoxStyle = 0;
 	int BoxSize = 10;
 	bool BoxOutline = false;
-	bool Glow = false;
-    bool GlowVisibleOnly = false;
-	int GlowStyle = 0;
-	int GlowPulseSpeed = 0;
-	float GlowPulseRange = 0;
-	bool Chams = false;
-	bool ChamsVisibleOnly = false;
-	int  ChamsStyle = 0;
-	int ChamsDouble = 0;
 	bool FillBox = false;
 	bool HeadEsp = false;
 	bool Line = false;
@@ -261,14 +232,6 @@ public:
 	Color BoxTT = Color(255, 0, 0, 255);
 	Color BoxVisibleCT = Color(0, 255, 0, 255);
 	Color BoxVisibleTT = Color(0, 255, 0, 255);
-	Color GlowCT = Color(255, 0, 0, 255);
-	Color GlowTT = Color(255, 0, 0, 255);
-	Color GlowVisibleCT = Color(0, 255, 0, 255);
-	Color GlowVisibleTT = Color(0, 255, 0, 255);
-	Color ChamsCT = Color(255, 0, 0, 255);
-	Color ChamsTT = Color(255, 0, 0, 255);
-	Color ChamsVisibleCT = Color(0, 255, 0, 255);
-	Color ChamsVisibleTT = Color(0, 255, 0, 255);
 	Color FillBoxColor = Color(10, 255, 10, 40);
 	Color HeadEspColor = Color(10, 255, 255, 255);
 	Color LineColor = Color(10, 255, 255, 255);
@@ -312,14 +275,6 @@ public:
 		RV(BoxTT, "BoxTT");
 		RV(BoxVisibleCT, "BoxVisibleCT");
 		RV(BoxVisibleTT, "BoxVisibleTT");
-		RV(GlowCT, "GlowCT");
-		RV(GlowTT, "GlowTT");
-		RV(GlowVisibleCT, "GlowVisbleCT");
-		RV(GlowVisibleTT, "GlowVisbleTT");
-		RV(ChamsCT, "ChamsCT");
-		RV(ChamsTT, "ChamsTT");
-		RV(ChamsVisibleCT, "ChamsVisibleCT");
-		RV(ChamsVisibleTT, "ChamsVisibleTT");
 		RV(FillBoxColor, "FillBoxColor");
 		RV(HeadEspColor, "HeadEspColor");
 		RV(LineColor, "LineColor");
@@ -358,15 +313,6 @@ public:
 		RV(BoxStyle, "BoxStyle");
 		RV(BoxSize, "BoxSize");
 		RV(BoxOutline, "BoxOutline");
-		RV(Glow, "Glow");
-		RV(GlowVisibleOnly, "GlowVisibleOnly");
-		RV(GlowStyle, "GlowStyle");
-		RV(GlowPulseSpeed, "GlowPulseSpeed");
-		RV(GlowPulseRange, "GlowPulseRange");
-		RV(Chams, "Chams");
-		RV(ChamsVisibleOnly, "ChamsVisbleOnly");
-		RV(ChamsStyle, "ChamsStyle");
-		RV(ChamsDouble, "ChamsDouble");
 		RV(FillBox, "FillBox");
 		RV(HeadEsp, "HeadEsp");
 		RV(Line, "Line");

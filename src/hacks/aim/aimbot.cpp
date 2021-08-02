@@ -199,23 +199,9 @@ void CAimbot::Draw()
 					GP_Render->DrawLine(BestHitBoxScreen.x, BestHitBoxScreen.y - (LineLen / 2.f), BestHitBoxScreen.x, BestHitBoxScreen.y + (LineLen / 2.f), FovColor);
 				}
 			}
-
-			if (iSilentBestHitBox != -1 && iSilentBestTarget != -1)
-			{
-				Vector SilentBestHitBoxScreen;
-
-				if (CGlobal::WorldToScreen(SilentBestHitBoxPos, SilentBestHitBoxScreen))
-				{
-					float LineLen = 12.f;
-					GP_Render->DrawLine(SilentBestHitBoxScreen.x - (LineLen / 2.f), SilentBestHitBoxScreen.y,
-						SilentBestHitBoxScreen.x + (LineLen / 2.f), SilentBestHitBoxScreen.y, SilentFovColor);
-					GP_Render->DrawLine(SilentBestHitBoxScreen.x, SilentBestHitBoxScreen.y - (LineLen / 2.f),
-						SilentBestHitBoxScreen.x, SilentBestHitBoxScreen.y + (LineLen / 2.f), SilentFovColor);
-				}
-			}
 		}
 
-		if ((DrawFov || DrawSilentFov) && pLocalPlayer && AimWorking && SelectedWeapon > -1)
+		if ((DrawFov) && pLocalPlayer && AimWorking && SelectedWeapon > -1)
 		{
 			CBaseEntity* pPlayer = pLocalPlayer;
 
@@ -225,16 +211,6 @@ void CAimbot::Draw()
 			float dy = CGlobal::iScreenHeight / CGlobal::GFovView;
 			float dx = CGlobal::iScreenWidth / CGlobal::GFovView;
 
-			bool _CanSilent = true;
-
-			if (Weapons[GetWeap(SelectedWeapon)].SilentEndBullet > 0)
-				if (iShotsFired >= Weapons[GetWeap(SelectedWeapon)].SilentEndBullet)
-					_CanSilent = false;
-
-			if (_CanSilent)
-				if (Weapons[GetWeap(SelectedWeapon)].SilentStartBullet > 0)
-					if (Weapons[GetWeap(SelectedWeapon)].SilentStartBullet - 1 > iShotsFired)
-						_CanSilent = false;
 
 			float x = CGlobal::iScreenWidth / 2.f;
 			float y = CGlobal::iScreenHeight / 2.f;
@@ -247,10 +223,6 @@ void CAimbot::Draw()
 					{
 						if (DrawFov)
 							GP_Render->DrawRing(x, y, (dy * GFov / 3.f), 32, FovColor);
-
-						if (DrawSilentFov && Weapons[GetWeap(SelectedWeapon)].Silent)
-							if (_CanSilent)
-								GP_Render->DrawRing(x, y, (dy * GSilentFov), 32, SilentFovColor);
 					}
 					else if (FovPos == 1)
 					{
@@ -262,10 +234,6 @@ void CAimbot::Draw()
 
 						if (DrawFov)
 							GP_Render->DrawRing(pos.x, pos.y, (dy * GFov / 3.f), 32, FovColor);
-
-						if (DrawSilentFov && Weapons[GetWeap(SelectedWeapon)].Silent)
-							if (_CanSilent)
-								GP_Render->DrawRing(pos.x, pos.y, (dy * GSilentFov), 32, SilentFovColor);
 					}
 				}
 			}
@@ -280,16 +248,6 @@ void CAimbot::Draw()
 
 					if (CGlobal::WorldToScreen(BestHitBoxPos, m_vAimBestHitboxScreen))
 						GP_Render->DrawRing(m_vAimBestHitboxScreen.x, m_vAimBestHitboxScreen.y, iFov / int(1920 / CGlobal::iScreenWidth), 32, FovColor);
-				}
-				if (DrawSilentFov && iLastSilentBestHitBox != -1 && pOldBestTarget->GetHealth() > 0 && Weapons[GetWeap(SelectedWeapon)].Silent)
-				{
-					float base_fov = pow((dx * GSilentFov) + 30, 2) * CGlobal::GFovView;
-					float iFov = (base_fov / (pLocalPlayer->GetHitboxPosition(0).DistTo(SilentBestHitBoxPos) * CGlobal::GFovView));
-
-					Vector m_vAimBestHitboxScreen;
-
-					if (CGlobal::WorldToScreen(SilentBestHitBoxPos, m_vAimBestHitboxScreen) && _CanSilent)
-						GP_Render->DrawRing(m_vAimBestHitboxScreen.x, m_vAimBestHitboxScreen.y, iFov / int(1920 / CGlobal::iScreenWidth), 32, SilentFovColor);
 				}
 			}
 		}
@@ -313,67 +271,6 @@ static bool valid(float simtime)
 	return std::fabsf(delta) <= 0.2f;
 };
 
-void CAimbot::DrawModelExecute(void* thisptr, IMatRenderContext* ctx, const DrawModelState_t& state, const ModelRenderInfo_t& pInfo, matrix3x4_t* pCustomBoneToWorld)
-{
-	if (ShowBacktrack && Weapons[GetWeap(SelectedWeapon)].Backtrack && Weapons[GetWeap(SelectedWeapon)].BacktrackTimeLimit)
-	{
-		static auto fnDME = HookTables::pDrawModelExecute->GetTrampoline();
-		const char* ModelName = I::ModelInfo()->GetModelName((model_t*)pInfo.pModel);
-
-		if (!ModelName)
-			return;
-
-		if (!strstr(ModelName, __xor("models/player")))
-			return;
-
-		CEntityPlayer* Entity = GP_EntPlayers->GetByIdx(pInfo.entity_index);
-		CEntityPlayer* Local = GP_EntPlayers->EntityLocal;
-
-		if (!Entity || !Local)
-			return;
-
-		if (!Entity->IsUpdated)
-			return;
-
-		if (Entity->IsDead || Entity->Health <= 0)
-			return;
-
-		if (Entity->IsDormant)
-			return;
-
-		if (!Local->IsDead)
-		{
-			auto& record = records.at(Entity->Idx);
-			if (record.size() > 0 && valid(record.front().simtime))
-			{
-				switch (SBTick)
-				{
-				case 0:
-					for (auto& data : record)
-					{
-						if (Entity->RenderOrigin.DistTo(data.origin) > 1.f)
-						{
-							GP_Esp->OverrideMaterial(!SBVisibleOnly, SBDouble, SBStyle, ShowBactrackColor);
-							fnDME(thisptr, ctx, state, pInfo, data.matrix);
-							I::ModelRender()->ForcedMaterialOverride(nullptr);
-						}
-					}
-					break;
-				case 1:
-					if (Entity->RenderOrigin.DistTo(record.back().origin) > 1.f)
-					{
-						GP_Esp->OverrideMaterial(!SBVisibleOnly, SBDouble, SBStyle, ShowBactrackColor);
-						fnDME(thisptr, ctx, state, pInfo, record.back().matrix);
-						I::ModelRender()->ForcedMaterialOverride(nullptr);
-					}
-					break;
-				default:
-					break;
-				}
-			}
-		}
-	}
-}
 
 Vector OldStandRCS = Vector(0, 0, 0);
 bool NextSimpleDisable = false;
@@ -385,9 +282,6 @@ void CAimbot::CreateMove(bool &bSendPacket, float flInputSampleTime, CUserCmd* p
 {
 	iBestTarget = -1;
 	iBestHitBox = -1;
-	iSilentBestTarget = -1;
-	iSilentBestHitBox = -1;
-	CanSilent = false;
 
 	AimEndBullet = Weapons[GetWeap(SelectedWeapon)].EndBullet;
 
@@ -431,26 +325,10 @@ void CAimbot::CreateMove(bool &bSendPacket, float flInputSampleTime, CUserCmd* p
 	AimPunchAngle = pLocalPlayer->GetPunchAngles();
 	FovStartAng = pCmd->viewangles + ((AimPunchAngle * (Vector(RCS_X, RCS_Y, 0) / 100.f)) * 2.f);
 
-	if (CanSilent)
-	{
-		if (!GetBestTarget(true))
-			CanSilent = false;
 
-		if (CanSilent)
-			if (!GetBestHitBox(true))
-				CanSilent = false;
-
-		if (!CanSilent && pSilentAutoDelayEnable && FFDelayEnable)
-			pSilentAutoDelay = true;
-		else
-			pSilentAutoDelay = false;
-	}
-	else
-		pSilentAutoDelay = false;
-
-	GetBestTarget(false);
+	GetBestTarget();
 	if (iBestTarget != -1)
-		GetBestHitBox(false);
+		GetBestHitBox();
 
 	static WEAPON_ID OldWeapon = (WEAPON_ID)0;
 
@@ -470,7 +348,7 @@ void CAimbot::CreateMove(bool &bSendPacket, float flInputSampleTime, CUserCmd* p
 
 	OldWeapon = CGlobal::GWeaponID;
 
-	bool FindedTarg = (iBestTarget != -1 && iBestHitBox != -1) || (iSilentBestTarget != -1 && iSilentBestHitBox != -1);
+	bool FindedTarg = (iBestTarget != -1 && iBestHitBox != -1);
 
 	if (AutoFire && FindedTarg)
 		IsRevolver ? pCmd->buttons |= IN_ATTACK2 : pCmd->buttons |= IN_ATTACK;
@@ -499,15 +377,7 @@ void CAimbot::CreateMove(bool &bSendPacket, float flInputSampleTime, CUserCmd* p
 		if ((AutoPistol || AutoFire) && IsPistol)
 			CalcAutoPistol(pCmd, pLocalPlayer);
 
-	//bool EnableAimBacktrack = AimPlusBacktrack && Weapons[GetWeap(SelectedWeapon)].Backtrack && !FindedTarg && iBackTrackbestTarget != -1 && iBackTrackBestSimTime != -1;
-	//if (EnableAimBacktrack)
-	//{
-	//	GetBestHitBox(false, true);
-	//	iBestTarget = iBackTrackbestTarget;
-	//	FindedTarg = (iBestTarget != -1 && iBestHitBox != -1) || (iSilentBestTarget != -1 && iSilentBestHitBox != -1);
-	//}
-
-	bool AnyDelay = (FFDelay.STimer.Active || FFAutoDelay || pSilentAutoDelay);
+	bool AnyDelay = (FFDelay.STimer.Active || FFAutoDelay);
 
 	static bool FixAttack = false;
 
@@ -576,76 +446,18 @@ void CAimbot::CreateMove(bool &bSendPacket, float flInputSampleTime, CUserCmd* p
 		if (FFDelay.STimer.Active)
 			IsRevolver ? pCmd->buttons |= IN_ATTACK2 : pCmd->buttons |= IN_ATTACK;
 
-		CalcFinalVecRcs(false);
-		if (CanSilent)
-			CalcFinalVecRcs(true);
+		CalcFinalVecRcs();
 
 		if (FFDelay.STimer.Active)
 			IsRevolver ? pCmd->buttons &= ~IN_ATTACK2 : pCmd->buttons &= ~IN_ATTACK;
-
-		if (pSilentAutoDelay && !pSilentAutoDelayDisable && !CanFire(FovStartAng, pCmd, pBestTarget, 1, pLocalPlayer, true))
-			IsRevolver ? pCmd->buttons &= ~IN_ATTACK2 : pCmd->buttons &= ~IN_ATTACK;
-		else
-			pSilentAutoDelayDisable = true;
 
 		if ((IsRevolver ? (pCmd->buttons & IN_ATTACK2) : (pCmd->buttons & IN_ATTACK)))
 			FFDelayOCDisable = true;
 
 		if (!TSDelay.STimer.Active && !KillStop)
 		{
-			Vector FinalVec_Temp = Smooth(StartAng, FinalVec, GSmooth, false);
-			Vector SilentFinalVec_Temp = Smooth(StartAng, SilentFinalVec, 0, true);
-
-			if (CanSilent)
-				CanSilent = (Weapons[GetWeap(SelectedWeapon)].SilentHitchance == 100 ?
-					true : ((1 + (rand() % 101)) <= Weapons[GetWeap(SelectedWeapon)].SilentHitchance));
-
-			if (!CanSilent)
-				if (iBestTarget != -1 && iBestHitBox != -1)
-					CreateAssistMove(FinalVec_Temp);
-
-			if (CGlobal::GWeaponID == WEAPON_REVOLVER)
-			{
-				bool FinalEnableSilent = CanSilent;
-
-				if ((CGlobal::GWeaponID == WEAPON_REVOLVER) && (pCmd->buttons & IN_ATTACK))
-				{
-					debug_log("%f\n", RevolvNextFire - I::GlobalVars()->curtime);
-
-					bool TimeDDD = RevolvNextFire - I::GlobalVars()->curtime > ((iShotsFired == 0) ? 0.16f : 0.18f);
-
-					if (TimeDDD)
-						FinalEnableSilent = false;
-					else
-						SetRevolvTime = false;
-				}
-
-				if (FinalEnableSilent)
-				{
-					pCmd->viewangles = SilentFinalVec_Temp;
-					if (iBestTarget != -1 && iBestHitBox != -1)
-						CreateAssistMove(FinalVec_Temp, true);
-
-					bSendPacket = false;
-				}
-				else
-				{
-					if (CanSilent)
-						if (iBestTarget != -1 && iBestHitBox != -1)
-							CreateAssistMove(FinalVec_Temp);
-				}
-			}
-			else
-			{
-				if (CanSilent)
-				{
-					pCmd->viewangles = SilentFinalVec_Temp;
-					if (iBestTarget != -1 && iBestHitBox != -1)
-						CreateAssistMove(FinalVec_Temp, true);
-
-					bSendPacket = false;
-				}
-			}
+			Vector FinalVec_Temp = Smooth(StartAng, FinalVec, GSmooth);
+				CreateAssistMove(FinalVec_Temp);
 		}
 	}
 	else
@@ -653,7 +465,6 @@ void CAimbot::CreateMove(bool &bSendPacket, float flInputSampleTime, CUserCmd* p
 		FFDelay.STimer.Enable = false;
 		TSDelay.STimer.Enable = false;
 		KillStop = false;
-		pSilentAutoDelayDisable = false;
 		FFAutoDelay = false;
 		FFAutoDelayDisable = false;
 		SetSmoothStart = false;
@@ -699,7 +510,6 @@ void CAimbot::SetMainParams()
 	TSDelayEnable = Weapons[GetWeap(SelectedWeapon)].TargetSwitchDelayEnable;
 	TSDelayTime = Weapons[GetWeap(SelectedWeapon)].TargetSwitchDelay;
 
-	pSilentAutoDelayEnable = Weapons[GetWeap(SelectedWeapon)].FirstFireDelaySilentAuto;
 	FFAutoDelayEnable = Weapons[GetWeap(SelectedWeapon)].FirstFireDelayAuto && !EntityAim;
 
 	AutoPistol = Weapons[GetWeap(SelectedWeapon)].AutoPistol;
@@ -707,15 +517,9 @@ void CAimbot::SetMainParams()
 	OnlyZoom = Weapons[GetWeap(SelectedWeapon)].OnlyZoom;
 
 	/*========================================== All =============================================================*/
-	CanSilent = IsEnableSilent();
 	CanRCS = IsEnableRCS();
 	FovPos = Weapons[GetWeap(SelectedWeapon)].FovPos;
 	SmoothMF = Weapons[GetWeap(SelectedWeapon)].SmoothMoveFactor;
-
-	/*========================================== Silent ==========================================================*/
-	IsSilentNearest = Weapons[GetWeap(SelectedWeapon)].SilentNearest;
-	SilentHitBox = Weapons[GetWeap(SelectedWeapon)].SilentHitBox;
-	GSilentFov = Weapons[GetWeap(SelectedWeapon)].SilentFov;
 
 	/*========================================== Standard ========================================================*/
 	IsNearest = Weapons[GetWeap(SelectedWeapon)].HitBoxAfter1B && _CanRCS ?
@@ -832,25 +636,16 @@ float To360(float in)
 	return (in > 0 ? in : 180 + (180 + in));
 }
 
-void CAimbot::CreateAssistMove(Vector TargetAng, bool IsSilent)
+void CAimbot::CreateAssistMove(Vector TargetAng)
 {
 	if (!FaceItMode)
 	{
-		if (IsSilent)
-			I::Engine()->SetViewAngles(TargetAng);
-		else
-		{
-			if (LpCmd)
-				LpCmd->viewangles = TargetAng;
-			I::Engine()->SetViewAngles(TargetAng);
-		}
+		if (LpCmd)
+			LpCmd->viewangles = TargetAng;
+		I::Engine()->SetViewAngles(TargetAng);	
 	}
 	else if (FaceItMode && !CGlobal::IsGuiVisible)
 	{
-		if (IsSilent)
-			I::Engine()->SetViewAngles(TargetAng);
-		else
-		{
 			Vector ScreenTargPoint;
 			if (LpCmd)
 			{
@@ -892,7 +687,6 @@ void CAimbot::CreateAssistMove(Vector TargetAng, bool IsSilent)
 						NewMouseOfstPos.y = 0.f;
 				}
 				FastCall::G().t_mouse_event(MOUSEEVENTF_MOVE, (DWORD)NewMouseOfstPos.x, (DWORD)NewMouseOfstPos.y, NULL, NULL);
-			}
 		}
 	}
 }
@@ -927,7 +721,7 @@ static void Normalize(Vector& angle)
 	}
 }
 
-Vector CAimbot::Smooth(Vector& viewangles, Vector target, float factor, bool silent)
+Vector CAimbot::Smooth(Vector& viewangles, Vector target, float factor)
 {
 	factor /= 100.f;
 	Vector delta = target - viewangles;
@@ -967,17 +761,11 @@ Vector CAimbot::Smooth(Vector& viewangles, Vector target, float factor, bool sil
 
 	CGlobal::ClampAngles(delta);
 
-	bool isCurve = SmoothMethod == 1 && !CanSilent;
+	bool isCurve = SmoothMethod == 1;
 
 	if (!isCurve)
 	{
 		Vector toChange = Vector(0, 0, 0);
-		if (silent)
-		{
-			CGlobal::ClampAngles(target);
-			return target;
-		}
-
 		if (SmoothMF == 0)
 		{
 			float smooth = powf(factor, 0.27f);
@@ -1118,35 +906,6 @@ bool CAimbot::CanShoot()
 	return true;
 }
 
-bool CAimbot::IsEnableSilent()
-{
-	if (FaceIt)
-		return false;
-
-	bool ret = false;
-	if (Weapons[GetWeap(SelectedWeapon)].Silent && Weapons[GetWeap(SelectedWeapon)].SilentFov > 0)
-	{
-		ret = true;
-		if (Weapons[GetWeap(SelectedWeapon)].SilentHitchance == 0)
-			ret = false;
-		else
-		{
-			if (Weapons[GetWeap(SelectedWeapon)].SilentStartBullet > 0)
-				if (Weapons[GetWeap(SelectedWeapon)].SilentStartBullet - 1 > iShotsFired)
-					ret = false;
-
-			if (Weapons[GetWeap(SelectedWeapon)].SilentEndBullet > 0 && ret)
-				if (iShotsFired >= Weapons[GetWeap(SelectedWeapon)].SilentEndBullet)
-					ret = false;
-		}
-	}
-
-	if (ret)
-		ret = CanShoot();
-
-	return ret;
-}
-
 bool CAimbot::IsEnableRCS()
 {
 	bool Ret = false;
@@ -1176,9 +935,9 @@ bool CAimbot::IsEnableRCS()
 	return Ret;
 }
 
-bool CAimbot::GetBestTarget(bool _CheckSilent)
+bool CAimbot::GetBestTarget()
 {
-	float BestFov = _CheckSilent ? GSilentFov : GFov / 3.f;
+	float BestFov = GFov / 3.f;
 	int _iBestTarget = -1;
 
 	if (BestFov > 0.1f)
@@ -1209,7 +968,7 @@ bool CAimbot::GetBestTarget(bool _CheckSilent)
 				if (!(CheckEntity->GetFlags() & FL_ONGROUND) && JumpEnemyCheck)
 					continue;
 
-				if (_CheckSilent ? IsSilentNearest : IsNearest)
+				if (IsNearest)
 				{
 					for (int j = 0; j < 19/*17*/; j++)
 					{
@@ -1231,7 +990,7 @@ bool CAimbot::GetBestTarget(bool _CheckSilent)
 				}
 				else
 				{
-					int _HitBox = _CheckSilent ? SilentHitBox : HitBox;
+					int _HitBox = HitBox;
 						
 					if (_HitBox == 2)
 						_HitBox = 6;
@@ -1290,33 +1049,19 @@ bool CAimbot::GetBestTarget(bool _CheckSilent)
 			}
 		}
 	}
-
-	if (_CheckSilent)
-	{
-		iSilentBestTarget = _iBestTarget;
-		if (iSilentBestTarget == -1)
-			return false;
-		else
-			return true;
-	}
-	else
-	{
 		iBestTarget = _iBestTarget;
 		if (iBestTarget == -1)
 			return false;
 		else
 			return true;
-	}
-	return true;
 }
 
-bool CAimbot::GetBestHitBox(bool _CheckSilent, bool CheckBackTrack)
+bool CAimbot::GetBestHitBox()
 {
-	if (!CheckBackTrack)
-		if (!pBestTarget)
-			return false;
+	if (!pBestTarget)
+		return false;
 
-	float BestFov = _CheckSilent ? GSilentFov : GFov / 3.f;
+	float BestFov = GFov / 3.f;
 	int HiddenHitBoxs = 0;
 	int _BestHitBox = -1;
 	Vector _BestHitBoxPos = Vector(0, 0, 0);
@@ -1331,19 +1076,16 @@ bool CAimbot::GetBestHitBox(bool _CheckSilent, bool CheckBackTrack)
 
 		if (!EntityAim)
 		{
-			if (_CheckSilent ? IsSilentNearest : IsNearest)
+			if (IsNearest)
 			{
 				for (int i = 0; i < 7; i++)
 				{
-					if (!CheckBackTrack)
-					{
-						vecHitBox = pBestTarget->GetHitboxPosition(i);
+					vecHitBox = pBestTarget->GetHitboxPosition(i);
 
-						if (!pBestTarget->IsVisibleHitBox(pLocalPlayer, MyEyeAng, vecHitBox, SmokeCheck, FlashCheck) && WallCheck)
-						{
-							HiddenHitBoxs++;
-							continue;
-						}
+					if (!pBestTarget->IsVisibleHitBox(pLocalPlayer, MyEyeAng, vecHitBox, SmokeCheck, FlashCheck) && WallCheck)
+					{
+						HiddenHitBoxs++;
+						continue;
 					}
 					float _Fov = CalcFOV(FovStartAng, MyEyeAng, vecHitBox);
 
@@ -1358,13 +1100,10 @@ bool CAimbot::GetBestHitBox(bool _CheckSilent, bool CheckBackTrack)
 				{
 					for (int i = 7; i < 19/*17*/; i++)
 					{
-						if (!CheckBackTrack)
-						{
-							vecHitBox = pBestTarget->GetHitboxPosition(i);
+						vecHitBox = pBestTarget->GetHitboxPosition(i);
 
-							if (!pBestTarget->IsVisibleHitBox(pLocalPlayer, MyEyeAng, vecHitBox, SmokeCheck, FlashCheck) && WallCheck)
-								continue;
-						}
+						if (!pBestTarget->IsVisibleHitBox(pLocalPlayer, MyEyeAng, vecHitBox, SmokeCheck, FlashCheck) && WallCheck)
+							continue;
 
 						float _Fov = CalcFOV(FovStartAng, MyEyeAng, vecHitBox);
 
@@ -1379,15 +1118,11 @@ bool CAimbot::GetBestHitBox(bool _CheckSilent, bool CheckBackTrack)
 			}
 			else
 			{
-				int _HitBox = _CheckSilent ? SilentHitBox : HitBox;;
-
+				int _HitBox = HitBox;
 				if (_HitBox == 2)
 					_HitBox = 6;
-
 				_BestHitBox = _HitBox;
-
-				if (!CheckBackTrack)
-					_BestHitBoxPos = pBestTarget->GetHitboxPosition(_HitBox);
+				_BestHitBoxPos = pBestTarget->GetHitboxPosition(_HitBox);
 			}
 		}
 		else
@@ -1428,10 +1163,7 @@ bool CAimbot::GetBestHitBox(bool _CheckSilent, bool CheckBackTrack)
 			}
 		}
 
-		if (_CheckSilent)
-			iLastBestHitBox = _BestHitBox;
-		else
-			iLastSilentBestHitBox = _BestHitBox;
+		iLastBestHitBox = _BestHitBox;
 
 		if (FovPos == 2)
 		{
@@ -1439,10 +1171,7 @@ bool CAimbot::GetBestHitBox(bool _CheckSilent, bool CheckBackTrack)
 			float dx = CGlobal::iScreenWidth / CGlobal::GFovView;
 
 			float iFovVal = 0;
-			if (_CheckSilent)
-				iFovVal = dx * GSilentFov;
-			else
-				iFovVal = dx * (GFov / 3.f);
+			iFovVal = dx * (GFov / 3.f);
 
 			float base_fov = pow(iFovVal + 30, 2) * CGlobal::GFovView;
 			BestFov = (base_fov / (pLocalPlayer->GetHitboxPosition(0).DistTo(_BestHitBoxPos) * CGlobal::GFovView));
@@ -1455,20 +1184,6 @@ bool CAimbot::GetBestHitBox(bool _CheckSilent, bool CheckBackTrack)
 				_BestHitBox = -1;
 		}
 	}
-	if (_CheckSilent)
-	{
-		iSilentBestHitBox = _BestHitBox;
-		SilentBestHitBoxPos = _BestHitBoxPos;
-
-		SilentPreVec = CalculateAngle(MyEyeAng, SilentBestHitBoxPos);
-
-		if (iSilentBestHitBox == -1)
-			return false;
-		else
-			return true;
-	}
-	else
-	{
 		iBestHitBox = _BestHitBox;
 		BestHitBoxPos = _BestHitBoxPos;
 
@@ -1478,14 +1193,10 @@ bool CAimbot::GetBestHitBox(bool _CheckSilent, bool CheckBackTrack)
 			return false;
 		else
 			return true;
-	}
 }
 
-void CAimbot::CalcFinalVecRcs(bool _CheckSilent)
+void CAimbot::CalcFinalVecRcs()
 {
-	if (_CheckSilent)
-		SilentFinalVec = SilentPreVec - ((AimPunchAngle * (Vector(100.f, 100.f, 0) / 100.f)) * 2.f);
-	else
 		FinalVec = PreVec - (AimPunchAngle * Vector(RCS_X / 50.f, RCS_Y / 50.f, 0));
 }
 
@@ -1825,7 +1536,6 @@ void CAimbot::TriggerRCS(int X, int Y, CUserCmd* pCmd, bool Enable)
 
 void CAimbot::InitConVar()
 {
-	records.clear();
 	cvars.UpdateRate = I::GetCvar()->FindVar(__xor("cl_updaterate"));
 	cvars.maxUpdateRate = I::GetCvar()->FindVar(__xor("sv_maxupdaterate"));
 	cvars.interp = I::GetCvar()->FindVar(__xor("cl_interp"));
@@ -1833,144 +1543,6 @@ void CAimbot::InitConVar()
 	cvars.minInterpRatio = I::GetCvar()->FindVar(__xor("sv_client_min_interp_ratio"));
 	cvars.maxInterpRatio = I::GetCvar()->FindVar(__xor("sv_client_max_interp_ratio"));
 	cvars.maxUnlag = I::GetCvar()->FindVar(__xor("sv_maxunlag"));
-}
-
-void CAimbot::BacktrackCreateMoveEP(CUserCmd* pCmd)
-{
-	auto AngleVector = [&](QAngle meme)
-	{
-		auto sy = sin(meme.y / 180.f * static_cast<float>(3.141592654f));
-		auto cy = cos(meme.y / 180.f * static_cast<float>(3.141592654f));
-
-		auto sp = sin(meme.x / 180.f * static_cast<float>(3.141592654f));
-		auto cp = cos(meme.x / 180.f * static_cast<float>(3.141592654f));
-
-		return Vector(cp * cy, cp * sy, -sp);
-	};
-
-	auto DistancePointToLine = [&](Vector Point, Vector LineOrigin, Vector Dir)
-	{
-		auto PointDir = Point - LineOrigin;
-
-		auto TempOffset = PointDir.Dot(Dir) / (Dir.x * Dir.x + Dir.y * Dir.y + Dir.z * Dir.z);
-		if (TempOffset < 0.000001f)
-			return FLT_MAX;
-
-		auto PerpendicularPoint = LineOrigin + (Dir * TempOffset);
-
-		return (Point - PerpendicularPoint).Length();
-	};
-
-	iBackTrackbestTarget = -1;
-
-	pLocalPlayer = (CBaseEntity*)I::EntityList()->GetClientEntity(I::Engine()->GetLocalPlayer());
-
-	if (!pLocalPlayer || pLocalPlayer->IsDead())
-	    return;
-
-	if (SelectedWeapon < 0)
-		return;
-
-	if (Weapons[GetWeap(SelectedWeapon)].Backtrack && !FaceIt && Weapons[GetWeap(SelectedWeapon)].BacktrackTimeLimit)
-	{
-		//if (BacktrackFakeLatency && (Weapons[GetWeap(SelectedWeapon)].BacktrackTimeLimit < 200))
-		//	Weapons[GetWeap(SelectedWeapon)].BacktrackTimeLimit += 200;
-		//else if (!(BacktrackFakeLatency) && Weapons[GetWeap(SelectedWeapon)].BacktrackTimeLimit > 200)
-		//	Weapons[GetWeap(SelectedWeapon)].BacktrackTimeLimit -= 200;
-
-		PlayerInfo info;
-		float bestFov = FLT_MAX;
-		for (int i = 0; i <= I::Engine()->GetMaxClients(); i++)
-		{
-			CBaseEntity* entity = (CBaseEntity*)I::EntityList()->GetClientEntity(i);
-
-			if (!entity || !pLocalPlayer)
-			{ records[i].clear(); continue; }
-
-			if (entity == pLocalPlayer)
-			{ records[i].clear(); continue; }
-
-			if (!I::Engine()->GetPlayerInfo(i, &info))
-			{ records[i].clear(); continue; }
-
-			if (entity->IsDormant())
-			{ records[i].clear(); continue; }
-
-			if (pLocalPlayer->GetTeam() == entity->GetTeam())
-			{ records[i].clear(); continue; }
-
-			if (!records[i].empty() && (records[i].front().simtime == entity->GetSimTime()))
-				continue;
-
-			BacktrackData record;
-			record.origin = entity->GetAbsOrigin();
-			record.simtime = entity->GetSimTime();
-			record.hitboxPos = entity->GetHitboxPosition(0 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 16 & 17 & 18 & 19 & 10 & 11);
-
-			entity->InvalidateBoneCache();
-			entity->SetupBones(record.matrix, 256, 0x7FF00, I::GlobalVars()->curtime);
-
-			Vector ViewDir = AngleVector(pCmd->viewangles + (pLocalPlayer->GetAimPunchAngle() * 2.f));
-			float FOVDistance = DistancePointToLine(record.hitboxPos, pLocalPlayer->GetEyePosition(), ViewDir);
-
-			if (FOVDistance < bestFov)
-			{
-				bestFov = FOVDistance;
-				iBackTrackbestTarget = i;
-				pBestBacktrackTarget = entity;
-			}
-
-			records[i].push_front(record);
-
-			while (records[i].size() > 3 && records[i].size() > static_cast<size_t>(TIME_TO_TICKS(static_cast<float>(Weapons[GetWeap(SelectedWeapon)].BacktrackTimeLimit) / 1000.f)))
-				records[i].pop_back();
-
-			auto invalid = std::find_if(std::cbegin(records[i]), std::cend(records[i]), [](const BacktrackData& rec) { return !valid(rec.simtime); });
-			if (invalid != std::cend(records[i]))
-				records[i].erase(invalid, std::cend(records[i]));
-		}
-
-		float bestTargetSimTime = 0;
-		if (iBackTrackbestTarget != -1)
-		{
-			float tempFloat = FLT_MAX;
-			for (auto& node : records)
-			{
-				auto& cur_data = node.second;
-				if (cur_data.empty())
-					continue;
-
-				for (auto& bd : cur_data)
-				{
-					if (cur_data.size() <= 3 || (!Weapons[GetWeap(SelectedWeapon)].BacktrackIgnoreSmoke && CGlobal::LineGoesThroughSmoke(pLocalPlayer->GetEyePosition(), bd.origin)))
-						return;
-
-					if (!valid(bd.simtime))
-						continue;
-
-					Vector ViewDir = AngleVector(pCmd->viewangles + (pLocalPlayer->GetAimPunchAngle() * 2.f));
-					float tempFOVDistance = DistancePointToLine(bd.hitboxPos, pLocalPlayer->GetEyePosition(), ViewDir);
-
-					if (tempFOVDistance < tempFloat)
-					{
-						tempFloat = tempFOVDistance;
-						bestTargetSimTime = TIME_TO_TICKS(bd.simtime + getLerp());
-						iBackTrackBestSimTime = bestTargetSimTime;
-					}
-				}
-			}
-		}
-
-		if (pCmd->buttons & IN_ATTACK && iBackTrackbestTarget != -1)
-		{
-			auto& record = records.at(iBackTrackbestTarget);
-			if (record.size() > 0)
-				for (auto& data : record)
-					pBestBacktrackTarget->SetAbsOrigin(data.origin);
-
-			pCmd->tick_count = bestTargetSimTime;
-		}
-	}
 }
 
 void CAimbot::SaveWeapons(nlohmann::json &j)
@@ -1996,13 +1568,6 @@ void CAimbot::SaveWeapons(nlohmann::json &j)
 		}
 
 		SV("IsCustomSub", v.IsCustomSub);
-		SV("Silent", v.Silent);
-		SV("SilentFov", v.SilentFov);
-		SV("SilentHitBox", v.SilentHitBox);
-		SV("SilentNearest", v.SilentNearest);
-		SV("SilentHitchance", v.SilentHitchance);
-		SV("SilentStartBullet", v.SilentStartBullet);
-		SV("SilentEndBullet", v.SilentEndBullet);
 		SV("FovPos", v.FovPos);
 		SV("Smooth", v.Smooth);
 		SV("Fov", v.Fov);
@@ -2042,9 +1607,6 @@ void CAimbot::SaveWeapons(nlohmann::json &j)
 		SV("TriggerRcsX", v.TriggerRcsX);
 		SV("TriggerRcsY", v.TriggerRcsY);
 		SV("TriggerDelay", v.TriggerDelay);
-		SV("Backtrack", v.Backtrack);
-		SV("BacktrackIgnoreSmoke", v.BacktrackIgnoreSmoke);
-		SV("BacktrackTimeLimit", v.BacktrackTimeLimit);
 		SV("SmoothMoveFactor", v.SmoothMoveFactor);
 	}
 }
@@ -2127,13 +1689,6 @@ void CAimbot::LoadWeapons(nlohmann::json &j)
 				}
 
 				LV("IsCustomSub", v.IsCustomSub);
-				LV("Silent", v.Silent);
-				LV("SilentFov", v.SilentFov);
-				LV("SilentHitBox", v.SilentHitBox);
-				LV("SilentNearest", v.SilentNearest);
-				LV("SilentHitchance", v.SilentHitchance);
-				LV("SilentStartBullet", v.SilentStartBullet);
-				LV("SilentEndBullet", v.SilentEndBullet);
 				LV("FovPos", v.FovPos);
 				LV("Smooth", v.Smooth);
 				LV("Fov", v.Fov);
@@ -2172,9 +1727,6 @@ void CAimbot::LoadWeapons(nlohmann::json &j)
 				LV("TriggerRcsX", v.TriggerRcsX);
 				LV("TriggerRcsY", v.TriggerRcsY);
 				LV("TriggerDelay", v.TriggerDelay);
-				LV("Backtrack", v.Backtrack);
-				LV("BacktrackIgnoreSmoke", v.BacktrackIgnoreSmoke);
-				LV("BacktrackTimeLimit", v.BacktrackTimeLimit);
 				LV("SmoothMoveFactor", v.SmoothMoveFactor);
 			}
 		}

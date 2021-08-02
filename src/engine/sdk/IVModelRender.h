@@ -225,7 +225,6 @@ namespace SDK
         virtual int                     DrawModelEx(ModelRenderInfo_t& pInfo) = 0;
         virtual int                     DrawModelExStaticProp(ModelRenderInfo_t& pInfo) = 0;
         virtual bool                    DrawModelSetup(ModelRenderInfo_t& pInfo, DrawModelState_t* pState, matrix3x4_t** ppBoneToWorldOut) = 0;
-        virtual void                    DrawModelExecute(IMatRenderContext* ctx, const DrawModelState_t& state, const ModelRenderInfo_t& pInfo, matrix3x4_t* pCustomBoneToWorld = NULL) = 0;
         virtual void                    SetupLighting(const Vector& vecCenter) = 0;
         virtual int                     DrawStaticPropArrayFast(StaticPropRenderInfo_t* pProps, int count, bool bShadowDepth) = 0;
         virtual void                    SuppressEngineLighting(bool bSuppress) = 0;

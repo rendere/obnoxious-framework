@@ -4,7 +4,6 @@
 #include "../DXRender.h"
 #include "../../Hacks/Setup.h"
 #include "../TestTexture.h"
-#include "../Fonts/Arial.h"
 #include "../Fonts/Tahoma.h"
 #include "../Fonts/WeaponIcons.h"
 
@@ -67,7 +66,7 @@ HRESULT STDMETHODCALLTYPE MyPresent(IDirect3DDevice9* pDevice, CONST RECT* pSour
 				0,
 			};
 			debug_log("2-1-11-7-3-7-4\n");
-			VisualsFont = VisualsFont->CreateFontFromCompressMemory(Arial_compressed_data, Arial_compressed_size, 16.f, &font_config, ranges);
+			VisualsFont = VisualsFont->CreateFontFromCompressMemory(Tahoma_compressed_data, Tahoma_compressed_size, 16.f, &font_config, ranges);
 			MenuFont = MenuFont->CreateFontFromCompressMemory(Tahoma_compressed_data, Tahoma_compressed_size, 16.f, &font_config, ranges);
 			debug_log("2-1-11-7-3-7-5\n");
 			GP_Render->UpdateSzFonts();
@@ -116,7 +115,6 @@ HRESULT STDMETHODCALLTYPE MyPresent(IDirect3DDevice9* pDevice, CONST RECT* pSour
 				{
 					if (GP_Misc)
 					{
-						GP_Misc->Reset();
 						GP_Misc->AutoAcceptEmit();
 					}	
 				}
@@ -126,13 +124,6 @@ HRESULT STDMETHODCALLTYPE MyPresent(IDirect3DDevice9* pDevice, CONST RECT* pSour
 			GP_Render->ReleaseOverlay();
 			
 			tahaGUI().Update();
-
-			if (CGlobal::IsGameReady)
-			{
-
-				if (GP_Radar)
-					GP_Radar->Draw();
-			}
 
 			Menu.Draw(MenuFont);
 

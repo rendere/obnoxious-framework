@@ -170,63 +170,6 @@ void CEsp::Menu()
 			tahaGUI().Separator();
 			tahaGUI().Spacing();
 
-			DCheckBox("Chams", Chams);
-			if (Chams)
-			{
-				tahaGUI().SameLine(SAME_LINE_1);
-				tahaGUI().PushItemWidth(PUSH_1);
-				VectorEx<const char*>itemsCSVis = { lolc("Textured"), lolc("Flat"), lolc("Metallic"), lolc("Metallic Plus"), lolc("Pearlescent"), lolc("Animated") };
-				DComboBox("Style##Chams", ChamsStyle, itemsCSVis);
-				tahaGUI().SameLine(SAME_LINE_1 + PUSH_1 + 40);
-				DCheckBox("Visible only##Chams", ChamsVisibleOnly);
-				tahaGUI().Spacing();
-				tahaGUI().SameLine(SAME_LINE_1);
-				tahaGUI().PushItemWidth(PUSH_1);
-				VectorEx<const char*>itemsCSd = { lolc("None"), lolc("Wireframe")};
-				DComboBox("Double##Chams", ChamsDouble, itemsCSd);
-
-				DColorEdit("CT color##Chams", ChamsCT);
-				tahaGUI().SameLine(100);
-				DColorEdit("T color##Chams", ChamsTT);
-				tahaGUI().SameLine(200);
-				DColorEdit("Visible CT color##Chams", ChamsVisibleCT);
-				tahaGUI().SameLine(340);
-				DColorEdit("Visible T color##Chams", ChamsVisibleTT);
-			}
-
-			tahaGUI().Spacing();
-			tahaGUI().Separator();
-			tahaGUI().Spacing();
-
-			DCheckBox("Glow", Glow)
-				if (Glow)
-				{
-					tahaGUI().SameLine(SAME_LINE_1);
-					tahaGUI().PushItemWidth(PUSH_1);
-					VectorEx<const char*>itemsCS = { lolc("Default"), lolc("Static pulse"), lolc("Dynamic pulse") };
-					DComboBox("Style##Glow", GlowStyle, itemsCS);
-					tahaGUI().SameLine(SAME_LINE_1 + PUSH_1 + 40);
-					DCheckBox("Visible only##Glow", GlowVisibleOnly);
-
-					DColorEdit("CT color##Glow", GlowCT);
-					tahaGUI().SameLine(100);
-					DColorEdit("T color##Glow", GlowTT);
-					tahaGUI().SameLine(200);
-					DColorEdit("Visible CT color##Glow", GlowVisibleCT);
-					tahaGUI().SameLine(340);
-					DColorEdit("Visible T color##Glow", GlowVisibleTT);
-					if (GlowStyle == 2)
-					{
-						tahaGUI().PushItemWidth(PUSH_2);
-						SliderInts("Speed", GlowPulseSpeed, 1, 15);
-						SliderFloats("Range", GlowPulseRange, 0.1, 1, "%.2f");
-					}
-				}
-
-			tahaGUI().Spacing();
-			tahaGUI().Separator();
-			tahaGUI().Spacing();
-
 			DCheckBox("Health", Health);
 			tahaGUI().SameLine(SAME_LINE_1);
 			DCheckBox("Armor", Armor);

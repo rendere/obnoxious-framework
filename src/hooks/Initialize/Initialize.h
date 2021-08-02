@@ -8,7 +8,6 @@
 #include "../Hooks/views.h"
 #include  "../hooks/emitsound.h"
 #include "../Hooks/fsn.h"
-#include "../Hooks/dme.h"
 #include "../Hooks/Other.h"
 #include "../Hacks/Setup.h"
 #include "Offsets.h"
@@ -32,7 +31,6 @@ public:
 #define RetrieveMessageIdx 2
 #define EmitSoundIdx 5
 #define OverrideViewIdx 18
-#define DrawModelExecuteIdx 21
 #define CreateMoveIdx 24
 #define GetViewModelFOVIdx 35
 #define FrameStageNotifyIdx 37
@@ -95,12 +93,6 @@ public:
 						(hkOverrideView),
 						&pOverrideView);
 					debug_log("Hook: OverrideView\n");
-
-					pContext.ApplyDetour<GetViewModelFOVFn>(static_cast<GetViewModelFOVFn>(ClientModeTable[GetViewModelFOVIdx]),
-						reinterpret_cast<GetViewModelFOVFn>
-						(hkGetViewModelFOV),
-						&pGetViewModelFOV);
-					debug_log("Hook: GetViewModelFOV\n");
 				}
 				debug_log("2-1-11-6\n");
 				if (ClientTable)
@@ -112,14 +104,6 @@ public:
 					debug_log("Hook: StageNotify\n");
 				}
 				debug_log("2-1-11-7\n");
-				if (ModelRenderTable)
-				{
-					pContext.ApplyDetour<DrawModelExecuteFn>(static_cast<DrawModelExecuteFn>(ModelRenderTable[DrawModelExecuteIdx]),
-						reinterpret_cast<DrawModelExecuteFn>
-						(hkDrawModelExecute),
-						&pDrawModelExecute);
-					debug_log("Hook: DME\n");
-				}
 #ifdef ENABLE_INVENTORY
 				if (SteamTable)
 				{

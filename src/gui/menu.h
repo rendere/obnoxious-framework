@@ -133,7 +133,7 @@ public:
 
 	void SelectWindow()
 	{
-		VectorEx<const char*>MainTabs = { lolc("aim"), lolc("visuals"), lolc("radar"), lolc("changer"), lolc("misc"), lolc("nade helper"), lolc("configs") };
+		VectorEx<const char*>MainTabs = { lolc("aim"), lolc("visuals"), lolc("changer"), lolc("misc"), lolc("nade helper"), lolc("configs") };
 		TabsLabels(SelectedTab, MainTabs, Vec2(tahaGUI().GetCurWindowSize().x - (tahaGUI().GetStyle().wndPadding.x * 2), 220), true);
 
 #ifdef NOT_PERSONAL_USE
@@ -155,11 +155,10 @@ public:
 		{
 		case 0: if (GP_LegitAim) GP_LegitAim->Menu(); break;
 		case 1: if (GP_Esp) GP_Esp->Menu(); break;
-		case 2: if (GP_Radar) GP_Radar->Menu(); break;
-		case 3: if (GP_Skins) Changers(); break;
-		case 4: if (GP_Misc) GP_Misc->Menu(); break;
-		case 5: if (GP_GHelper) { GP_GHelper->Menu(); } break;
-		case 6: SettingsMenu(); break;
+		case 2: if (GP_Skins) Changers(); break;
+		case 3: if (GP_Misc) GP_Misc->Menu(); break;
+		case 4: if (GP_GHelper) { GP_GHelper->Menu(); } break;
+		case 5: SettingsMenu(); break;
 		default: break;
 		}
 	}
