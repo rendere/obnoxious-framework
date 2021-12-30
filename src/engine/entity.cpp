@@ -34,12 +34,12 @@ namespace Engine
 	bool CBaseEntity::IsPlayer()
 	{
 		typedef bool(__thiscall * IsPlayerFn)(void*);
-		return GetMethod<IsPlayerFn>(this, 157)(this); //156
+		return GetMethod<IsPlayerFn>(this, 158)(this); //156
 	}
 
 	bool CBaseEntity::IsWeapon()
 	{
-		return GetMethod<bool(__thiscall*)(CBaseEntity*)>(this, 165)(this);
+		return GetMethod<bool(__thiscall*)(CBaseEntity*)>(this, 166)(this);
 	}
 
 	bool CBaseEntity::IsDefusing()

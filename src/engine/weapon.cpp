@@ -10,7 +10,7 @@ namespace Engine
 	float CBaseWeapon::GetInaccuracy()
 	{
 		typedef float(__thiscall* OriginalFn)(void*);
-		return GetMethod<OriginalFn>(this, 482)(this);
+		return GetMethod<OriginalFn>(this, 483)(this);
 	}
 
 	HANDLE* CBaseWeapon::GetWeaponWorldModel()
@@ -124,7 +124,7 @@ namespace Engine
 	const char*	CBaseWeapon::GetName()
 	{
 		typedef const char* (__thiscall* GetNameFn)(void*);
-		return GetMethod<GetNameFn>(this, 386)(this);
+		return GetMethod<GetNameFn>(this, 387)(this);
 	}
 
 	const char*	CBaseWeapon::GetPrintName()

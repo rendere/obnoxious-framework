@@ -64,7 +64,7 @@ namespace SDK
 		float_t flSpreadAlt;
 		int8_t pad10[76];
 		int32_t iRecoilSeed;
-		int8_t pad11[32];
+		int8_t pad11[32];	
 	};
 #pragma pack(pop)
 

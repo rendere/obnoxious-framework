@@ -127,12 +127,6 @@
     <ClCompile Include="Engine\SDK\KeyValues.cpp">
       <Filter>Engine\SDK</Filter>
     </ClCompile>
-    <ClCompile Include="Hacks\Radar\Radar.cpp">
-      <Filter>Hacks\Radar</Filter>
-    </ClCompile>
-    <ClCompile Include="Hacks\Radar\RadarMenu.cpp">
-      <Filter>Hacks\Radar</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\SDK\Math.cpp">
       <Filter>Engine\SDK</Filter>
     </ClCompile>
@@ -481,7 +475,6 @@
     <ClInclude Include="Render\DirectData\EndScene.h" />
     <ClInclude Include="Render\DirectData\Present.h" />
     <ClInclude Include="Render\DirectData\Reset.h" />
-    <ClInclude Include="Render\Fonts\Arial.h" />
     <ClInclude Include="Render\Fonts\stb_rect_pack.h" />
     <ClInclude Include="Render\Fonts\stb_truetype.h" />
     <ClInclude Include="Render\Fonts\Tahoma.h" />
@@ -627,9 +620,6 @@
     </ClInclude>
     <ClInclude Include="steam_sdk\steamuniverse.h">
       <Filter>steam_sdk</Filter>
-    </ClInclude>
-    <ClInclude Include="Hacks\Radar\Radar.h">
-      <Filter>Hacks\Radar</Filter>
     </ClInclude>
     <ClInclude Include="steam_sdk\matchmakingtypes.h">
       <Filter>Engine\SDK</Filter>
