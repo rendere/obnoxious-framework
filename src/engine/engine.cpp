@@ -16,6 +16,7 @@ vector<string> CGlobal::ConfigList;
 CBaseEntity* CGlobal::LocalPlayer;
 CUserCmd* CGlobal::UserCmd;
 
+bool CGlobal::SlowWalking = false;
 bool CGlobal::OrigRightHand;
 float CGlobal::OrigViewModelX;
 float CGlobal::OrigViewModelY;

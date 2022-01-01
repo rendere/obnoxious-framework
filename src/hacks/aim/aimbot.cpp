@@ -1352,6 +1352,15 @@ void CAimbot::TriggerCreateMove(CUserCmd* pCmd)
 
 	if (pLocalWeapon->GetWeaponReload())
 		return;
+	CCSWeaponInfo* chrisgay = pLocalPlayer->GetBaseWeapon()->GetWeaponInfo();
+	auto max_speed = 0.3f * (pLocalPlayer->GetIsScoped() ? chrisgay->flMaxSpeedAlt : chrisgay->flMaxSpeed);
+	auto move_length = sqrt(pCmd->sidemove * pCmd->sidemove + pCmd->forwardmove * pCmd->forwardmove);
+	auto forwardmove = pCmd->forwardmove / move_length;
+	auto sidemove = pCmd->sidemove / move_length;
+	if (move_length > max_speed && !CGlobal::SlowWalking)
+		return;
+
+
 
 	if (pLocalPlayer->IsFlashed() && TriggerFlashCheck)
 		return;

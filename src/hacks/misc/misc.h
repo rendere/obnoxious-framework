@@ -60,7 +60,10 @@ public:
 	bool JumpBug = false;
 	bool EdgeBugging = false;
 	bool EdgeBug = false;
+	bool SlowWalking = false;
+	bool SlowWalk = false;
 	CBind JumpBugBind = CBind(0, true);
+	CBind SlowWalkBind = CBind(0, true);
 	CBind EdgeBugBind = CBind(0, true);
 	int BHopType = 0;
 	int BHopChance = 0;
@@ -120,6 +123,8 @@ public:
 		RV(AutoStrafeSpeed, "AutoStrafeSpeed");
 		RV(EdgeJump, "EdgeJump");
 		RV(EdgeJumpBind, "EdgeJumpBind");
+		RV(SlowWalkBind, "SlowWalk");
+		RV(SlowWalkBind, "SlowWalkBind");
 		RV(JumpBug, "JumpBug");
 		RV(JumpBugBind, "JumpBugBind");
 		RV(EdgeBug, "EdgeBug");

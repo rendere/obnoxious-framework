@@ -71,6 +71,20 @@ void CMisc::Menu()
 	tahaGUI().Spacing();
 	tahaGUI().Separator();
 	tahaGUI().Spacing();
+
+	DCheckBox("Slow Walk", SlowWalk);
+	if (SlowWalk)
+	{
+		tahaGUI().SameLine(SAME_LINE_1);
+		tahaGUI().PushItemWidth(PUSH_1);
+		HotsKey("Button##slowwalk", SlowWalkBind.Button);
+		tahaGUI().SameLine();
+	DCheckBox("Hold##slowwalk", SlowWalkBind.Hold);
+	}
+
+	tahaGUI().Spacing();
+	tahaGUI().Separator();
+	tahaGUI().Spacing();
 	DCheckBox("Opposite hand knife", LRHandKnife);
 	tahaGUI().Spacing();
 	tahaGUI().Separator();

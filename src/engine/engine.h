@@ -130,6 +130,8 @@ public:
 	static CBaseEntity* LocalPlayer;
 	static CUserCmd* UserCmd;
 
+
+	static bool SlowWalking;
 	static bool OrigRightHand;
 	static float OrigViewModelX;
 	static float OrigViewModelY;

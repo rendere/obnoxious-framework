@@ -249,113 +249,163 @@ void CMisc::CreateMove(bool& bSendPacket, float flInputSampleTime, CUserCmd* pCm
 			{
 				I::Client()->DispatchUserMessage(CS_UM_ServerRankRevealAll, 0, 0, nullptr);
 			}
-			if (KnifeBot && KnifeBotBind.Check())
-			{
-				if (CGlobal::GWeaponType == WEAPON_TYPE_KNIFE)
+			CGlobal::SlowWalking = false; // i dont know if it'll work like this tbh.
+			if (SlowWalk && SlowWalkBind.Check()) {
+				if ((CGlobal::LocalPlayer->GetFlags() & FL_ONGROUND))
 				{
-					CBaseWeapon* pLocalWeapon = CGlobal::LocalPlayer->GetBaseWeapon();
-					if (pLocalWeapon)
+					
+					CCSWeaponInfo* chrisgay = CGlobal::LocalPlayer->GetBaseWeapon()->GetWeaponInfo();
+					auto max_speed = 0.3f * (CGlobal::LocalPlayer->GetIsScoped() ? chrisgay->flMaxSpeedAlt : chrisgay->flMaxSpeed);
+
+					if (!CGlobal::GWeaponType == WEAPON_TYPE_GRENADE ||
+						!CGlobal::GWeaponType == WEAPON_TYPE_KNIFE ||
+						!CGlobal::GWeaponType == WEAPON_TYPE_C4 ||
+						!CGlobal::GWeaponType == WEAPON_TYPE_UNKNOWN)
 					{
-						for (int EntIndex = 0; EntIndex < I::Engine()->GetMaxClients(); EntIndex++)
+						auto move_length = sqrt(pCmd->sidemove * pCmd->sidemove + pCmd->forwardmove * pCmd->forwardmove);
+						auto forwardmove = pCmd->forwardmove / move_length;
+						auto sidemove = pCmd->sidemove / move_length;
+
+						if (move_length > max_speed)
 						{
-							CEntityPlayer* Entity = &GP_EntPlayers->EntityPlayer[EntIndex];
-
-							if (!Entity->IsUpdated)
-								continue;
-
-							if (Entity->IsLocal)
-								continue;
-
-							if (!Entity->IsPlayer)
-								continue;
-
-							if (Entity->IsDead)
-								continue;
-
-							float Distance = Entity->Distance * 33;
-
-							if (Distance > KnifeBotDistance)
-								continue;
-
-							if (KnifeBotFilter == 1)
+							if (max_speed + 1.0f < CGlobal::LocalPlayer->GetVelocity().Length2D())
 							{
-								if ((int)Entity->Team != CGlobal::LocalPlayer->GetTeam())
+								pCmd->forwardmove = 0.0f;
+								pCmd->sidemove = 0.0f;
+							}
+							else
+							{
+								pCmd->sidemove = max_speed * sidemove;
+								pCmd->forwardmove = max_speed * forwardmove;
+							}
+						}
+					}
+					else
+
+					{
+						auto forwardmove = pCmd->forwardmove;
+						auto sidemove = pCmd->sidemove;
+
+						auto move_length = sqrt(sidemove * sidemove + forwardmove * forwardmove);
+						auto move_length_backup = move_length;
+
+						if (move_length > 110.0f)
+						{
+							pCmd->forwardmove = forwardmove / move_length_backup * 110.0f;
+							move_length = sidemove / move_length_backup * 110.0f;
+							pCmd->sidemove = sidemove / move_length_backup * 110.0f;
+						}
+					}
+					CGlobal::SlowWalking = true;
+				}
+				if (KnifeBot && KnifeBotBind.Check())
+				{
+					if (CGlobal::GWeaponType == WEAPON_TYPE_KNIFE)
+					{
+						CBaseWeapon* pLocalWeapon = CGlobal::LocalPlayer->GetBaseWeapon();
+						if (pLocalWeapon)
+						{
+							for (int EntIndex = 0; EntIndex < I::Engine()->GetMaxClients(); EntIndex++)
+							{
+								CEntityPlayer* Entity = &GP_EntPlayers->EntityPlayer[EntIndex];
+
+								if (!Entity->IsUpdated)
 									continue;
-							}
-							else if (KnifeBotFilter == 2)
-							{
-								if ((int)Entity->Team == CGlobal::LocalPlayer->GetTeam())
+
+								if (Entity->IsLocal)
 									continue;
-							}
 
-							Vector OrignWorld = Entity->RenderOrigin;
-							Vector OrignScreen;
+								if (!Entity->IsPlayer)
+									continue;
 
-							if (!CGlobal::WorldToScreen(OrignWorld, OrignScreen))
-								continue;
+								if (Entity->IsDead)
+									continue;
 
-							switch (KnifeBotMode)
-							{
-							case 0:
-							{
-								static int cur_attack = 0;
+								float Distance = Entity->Distance * 33;
 
-								if (Distance > 60.f)
-									pCmd->buttons |= IN_ATTACK;
-								else
+								if (Distance > KnifeBotDistance)
+									continue;
+
+								if (KnifeBotFilter == 1)
 								{
-									if ((CGlobal::LocalPlayer->GetTickBase() * I::GlobalVars()->interval_per_tick) - pLocalWeapon->GetNextPrimaryAttack() > 0)
-									{
-										if (Entity->Armor > 0)
-										{
-											if (Entity->Health - 21 <= 0)
-												pCmd->buttons |= IN_ATTACK;
-											else
-												pCmd->buttons |= IN_ATTACK2;
-										}
-										else
-										{
-											if (Entity->Health - 34 <= 0)
-												pCmd->buttons |= IN_ATTACK;
-											else
-												pCmd->buttons |= IN_ATTACK2;
-										}
-									}
-
+									if ((int)Entity->Team != CGlobal::LocalPlayer->GetTeam())
+										continue;
 								}
-								break;
-							}
-							case 1:
-							{
-								static int cur_attack = 0;
-
-								if (Distance > 60.f)
+								else if (KnifeBotFilter == 2)
 								{
-									pCmd->buttons |= IN_ATTACK;
-									cur_attack = 1;
+									if ((int)Entity->Team == CGlobal::LocalPlayer->GetTeam())
+										continue;
 								}
-								else
+
+								Vector OrignWorld = Entity->RenderOrigin;
+								Vector OrignScreen;
+
+								if (!CGlobal::WorldToScreen(OrignWorld, OrignScreen))
+									continue;
+
+								switch (KnifeBotMode)
 								{
-									float TimeSinceFire = (CGlobal::LocalPlayer->GetTickBase() * I::GlobalVars()->interval_per_tick) - pLocalWeapon->GetNextPrimaryAttack();
+								case 0:
+								{
+									static int cur_attack = 0;
 
-									if (cur_attack > 0 && TimeSinceFire > 0)
+									if (Distance > 60.f)
+										pCmd->buttons |= IN_ATTACK;
+									else
 									{
-										pCmd->buttons |= IN_ATTACK2;
-										TimeSinceFire = -1;
-										cur_attack = 0;
-									}
+										if ((CGlobal::LocalPlayer->GetTickBase() * I::GlobalVars()->interval_per_tick) - pLocalWeapon->GetNextPrimaryAttack() > 0)
+										{
+											if (Entity->Armor > 0)
+											{
+												if (Entity->Health - 21 <= 0)
+													pCmd->buttons |= IN_ATTACK;
+												else
+													pCmd->buttons |= IN_ATTACK2;
+											}
+											else
+											{
+												if (Entity->Health - 34 <= 0)
+													pCmd->buttons |= IN_ATTACK;
+												else
+													pCmd->buttons |= IN_ATTACK2;
+											}
+										}
 
-									if (cur_attack == 0 && TimeSinceFire > 0)
+									}
+									break;
+								}
+								case 1:
+								{
+									static int cur_attack = 0;
+
+									if (Distance > 60.f)
 									{
 										pCmd->buttons |= IN_ATTACK;
-										cur_attack++;
+										cur_attack = 1;
 									}
+									else
+									{
+										float TimeSinceFire = (CGlobal::LocalPlayer->GetTickBase() * I::GlobalVars()->interval_per_tick) - pLocalWeapon->GetNextPrimaryAttack();
+
+										if (cur_attack > 0 && TimeSinceFire > 0)
+										{
+											pCmd->buttons |= IN_ATTACK2;
+											TimeSinceFire = -1;
+											cur_attack = 0;
+										}
+
+										if (cur_attack == 0 && TimeSinceFire > 0)
+										{
+											pCmd->buttons |= IN_ATTACK;
+											cur_attack++;
+										}
+									}
+									break;
 								}
-								break;
-							}
-							case 2: pCmd->buttons |= IN_ATTACK2; break;
-							case 3: pCmd->buttons |= IN_ATTACK; break;
-							default: break;
+								case 2: pCmd->buttons |= IN_ATTACK2; break;
+								case 3: pCmd->buttons |= IN_ATTACK; break;
+								default: break;
+								}
 							}
 						}
 					}
@@ -364,7 +414,6 @@ void CMisc::CreateMove(bool& bSendPacket, float flInputSampleTime, CUserCmd* pCm
 		}
 	}
 }
-
 void CMisc::CreateMoveEP(bool& bSendPacket, CUserCmd* pCmd)
 {
 	if (Enable && CGlobal::IsGameReady && !CGlobal::FullUpdateCheck)

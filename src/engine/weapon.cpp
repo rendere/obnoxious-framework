@@ -113,7 +113,7 @@ namespace Engine
 	CCSWeaponInfo* CBaseWeapon::GetWeaponInfo()
 	{
 		typedef CCSWeaponInfo*(__thiscall* GetWeaponDataFn)(void*);
-		return GetMethod< GetWeaponDataFn >(this, 460)(this);
+		return GetMethod< GetWeaponDataFn >(this, 461)(this);
 	}
 
 	CBaseAttributableItem* CBaseWeapon::GeteAttributableItem()
