@@ -1,3 +1,8 @@
+# OUTDATED!
+
+as of 7/4/22, this sdk hasn't been updated in over half a year. i will not be updating it any further. proceed accordingly.
+
+
 # obnoxious framework ![alt text](https://i.imgur.com/ZXcfFYJ.png) ![alt text](https://i.imgur.com/RHlmKYL.png) ![alt text](https://i.imgur.com/1OKJ96Z.png) ![alt text](https://i.imgur.com/RPz95ve.png)
 Free open-source internal software for Counter-Strike: Global Offensive.
 
@@ -5,7 +10,7 @@ Forked from [this project](https://github.com/Spangonagornomb/Csgo-cheat). Updat
 
 # pre-requisites
 
-[Visual Studio 2019](https://visualstudio.microsoft.com/tr/vs/)
+[Visual Studio 2019](https://visualstudio.microsoft.com/en/vs/)
 
 [DirectX SDK from June 2010](https://www.microsoft.com/en-us/download/details.aspx?id=6812)
 
