@@ -154,8 +154,9 @@ void CMisc::Draw()
 	}
 }
 
-void CMisc::CreateMove(bool& bSendPacket, float flInputSampleTime, CUserCmd* pCmd)
+void CMisc::CreateMove(int sequence, float frametime, bool active, bool& bSendPacket)
 {
+	CUserCmd* pCmd = I::Input()->GetUserCmd(sequence);
 	if (CGlobal::LocalPlayer && CGlobal::IsGameReady)
 	{
 		if (CGlobal::LocalPlayer->GetBaseWeapon())
@@ -414,8 +415,9 @@ void CMisc::CreateMove(bool& bSendPacket, float flInputSampleTime, CUserCmd* pCm
 		}
 	}
 }
-void CMisc::CreateMoveEP(bool& bSendPacket, CUserCmd* pCmd)
+void CMisc::CreateMoveEP(int sequence, float frametime, bool active, bool& bSendPacket)
 {
+	CUserCmd* pCmd = I::Input()->GetUserCmd(sequence);
 	if (Enable && CGlobal::IsGameReady && !CGlobal::FullUpdateCheck)
 	{
 		if (CGlobal::LocalPlayer)

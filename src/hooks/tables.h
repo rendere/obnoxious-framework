@@ -10,7 +10,7 @@ namespace HookTables
 	using oPresent = HRESULT(STDMETHODCALLTYPE*)(IDirect3DDevice9*, CONST RECT*, CONST RECT*, HWND, CONST RGNDATA*);
 	using oReset = HRESULT(STDMETHODCALLTYPE*)(IDirect3DDevice9*, D3DPRESENT_PARAMETERS*);
 
-	using CreateMoveFn = bool(__stdcall*)(float, CUserCmd*);
+	using CreateMoveFn = void(__stdcall*)(int,float,bool);
 	using OverrideViewFn = bool(__stdcall*)(CViewSetup*);
 	using GetViewModelFOVFn = float(__stdcall*)();
 	using FrameStageNotifyFn = void(__thiscall*)(void*, ClientFrameStage_t);

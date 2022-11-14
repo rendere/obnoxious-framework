@@ -2,9 +2,15 @@
 #include "Tables.h"
 #include "../Engine/EnginePrediction.h"
 
-bool __stdcall hkCreateMove(float flInputSampleTime, CUserCmd* pCmd)
+void __stdcall hkCreateMove(int sequence, float frametime, bool active, bool& bSendPacket)
 {
-	bool bReturn = HookTables::pCreateMove->GetTrampoline()(flInputSampleTime, pCmd);
+    HookTables::pCreateMove->GetTrampoline()(sequence, frametime, active);
+
+	CUserCmd* pCmd = I::Input()->GetUserCmd(sequence);
+	CVerifiedUserCmd* pVerified = I::Input()->GetVerifiedCmd(sequence);
+
+	if (!pCmd || !active)
+		return;
 
 	if (CGlobal::IsGameReady && pCmd->command_number != 0 && !CGlobal::FullUpdateCheck)
 	{
@@ -12,8 +18,8 @@ bool __stdcall hkCreateMove(float flInputSampleTime, CUserCmd* pCmd)
 		CGlobal::UserCmd = pCmd;
 		CGlobal::LocalPlayer = (CBaseEntity*)I::EntityList()->GetClientEntity(I::Engine()->GetLocalPlayer());
 
-		if (bReturn)
-			I::Prediction()->SetLocalViewangles(Vector(pCmd->viewangles.x, pCmd->viewangles.y, pCmd->viewangles.z));
+	//	if (bReturn) // this is apparently unneeded when hooking chlclient::createmove
+	//		I::Prediction()->SetLocalViewangles(Vector(pCmd->viewangles.x, pCmd->viewangles.y, pCmd->viewangles.z));
 
 		if (GP_EntPlayers)
 			GP_EntPlayers->Update();
@@ -37,19 +43,19 @@ bool __stdcall hkCreateMove(float flInputSampleTime, CUserCmd* pCmd)
 			GP_LegitAim->SetSelectedWeapon();
 
 			if (GP_LegitAim->Enable)
-				GP_LegitAim->CreateMove(bSendPacket, flInputSampleTime, pCmd);
+				GP_LegitAim->CreateMove(sequence, frametime, active, bSendPacket);
 
 			if (GP_LegitAim->TriggerEnable)
 				GP_LegitAim->TriggerCreateMove(pCmd);
 		}
 
 		if (GP_Misc)
-			GP_Misc->CreateMove(bSendPacket, flInputSampleTime, pCmd);
+			GP_Misc->CreateMove(sequence, frametime, active, bSendPacket);
 
 		EnginePrediction::Run(pCmd);
 		{
 			if (GP_Misc)
-				GP_Misc->CreateMoveEP(bSendPacket, pCmd);
+				GP_Misc->CreateMoveEP(sequence, frametime, active, bSendPacket);
 
 			CGlobal::CorrectMouse(pCmd);
 		}
@@ -58,11 +64,21 @@ bool __stdcall hkCreateMove(float flInputSampleTime, CUserCmd* pCmd)
 		CGlobal::ClampAngles(pCmd->viewangles);
 		CGlobal::AngleNormalize(pCmd->viewangles);
 
-		*(bool*)(*FirstP - 0x1C) = bSendPacket;
-
-		if (!bSendPacket)
-			return false;
 	}
+	pVerified->m_cmd = *pCmd;
+	pVerified->m_crc = pCmd->GetChecksum();
+}
 
-	return bReturn;
+__declspec(naked) void __stdcall hkCreateMove_proxy(int sequence, float frametime, bool active)
+{
+	__asm {
+		push ebx
+		push esp
+		push dword ptr[esp + 20]
+		push dword ptr[esp + 0Ch + 8]
+		push dword ptr[esp + 10h + 4]
+		call hkCreateMove
+		pop  ebx
+		retn 0Ch
+	}
 }

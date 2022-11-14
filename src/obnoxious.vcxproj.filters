@@ -51,19 +51,19 @@
       <Filter>Initialize</Filter>
     </ClCompile>
     <ClCompile Include="Hooks\MinHook\src\buffer.c">
-      <Filter>X1API\MinHook\src</Filter>
+      <Filter>API\MinHook\src</Filter>
     </ClCompile>
     <ClCompile Include="Hooks\MinHook\src\trampoline.c">
-      <Filter>X1API\MinHook\src</Filter>
+      <Filter>API\MinHook\src</Filter>
     </ClCompile>
     <ClCompile Include="Hooks\MinHook\src\hook.c">
-      <Filter>X1API\MinHook\src</Filter>
+      <Filter>API\MinHook\src</Filter>
     </ClCompile>
     <ClCompile Include="Hooks\MinHook\src\HDE\hde32.c">
-      <Filter>X1API\MinHook\src\HDE</Filter>
+      <Filter>API\MinHook\src\HDE</Filter>
     </ClCompile>
     <ClCompile Include="Hooks\MinHook\src\HDE\hde64.c">
-      <Filter>X1API\MinHook\src\HDE</Filter>
+      <Filter>API\MinHook\src\HDE</Filter>
     </ClCompile>
     <ClCompile Include="Render\DXFont.cpp">
       <Filter>Render</Filter>
@@ -217,31 +217,31 @@
       <Filter>Json</Filter>
     </ClInclude>
     <ClInclude Include="Hooks\MinHook\MinHook.h">
-      <Filter>X1API\MinHook</Filter>
+      <Filter>API\MinHook</Filter>
     </ClInclude>
     <ClInclude Include="Hooks\MinHook\src\buffer.h">
-      <Filter>X1API\MinHook\src</Filter>
+      <Filter>API\MinHook\src</Filter>
     </ClInclude>
     <ClInclude Include="Hooks\MinHook\hook.h">
-      <Filter>X1API\MinHook</Filter>
+      <Filter>API\MinHook</Filter>
     </ClInclude>
     <ClInclude Include="Hooks\MinHook\src\trampoline.h">
-      <Filter>X1API\MinHook\src</Filter>
+      <Filter>API\MinHook\src</Filter>
     </ClInclude>
     <ClInclude Include="Hooks\MinHook\src\HDE\hde32.h">
-      <Filter>X1API\MinHook\src\HDE</Filter>
+      <Filter>API\MinHook\src\HDE</Filter>
     </ClInclude>
     <ClInclude Include="Hooks\MinHook\src\HDE\hde64.h">
-      <Filter>X1API\MinHook\src\HDE</Filter>
+      <Filter>API\MinHook\src\HDE</Filter>
     </ClInclude>
     <ClInclude Include="Hooks\MinHook\src\HDE\table32.h">
-      <Filter>X1API\MinHook\src\HDE</Filter>
+      <Filter>API\MinHook\src\HDE</Filter>
     </ClInclude>
     <ClInclude Include="Hooks\MinHook\src\HDE\table64.h">
-      <Filter>X1API\MinHook\src\HDE</Filter>
+      <Filter>API\MinHook\src\HDE</Filter>
     </ClInclude>
     <ClInclude Include="Hooks\MinHook\src\HDE\pstdint.h">
-      <Filter>X1API\MinHook\src\HDE</Filter>
+      <Filter>API\MinHook\src\HDE</Filter>
     </ClInclude>
     <ClInclude Include="Render\DirectData\EndScene.h">
       <Filter>Render\DirectData</Filter>
@@ -701,9 +701,6 @@
     <Filter Include="Render">
       <UniqueIdentifier>{6829291e-bd1c-490f-b9e3-d3c354a73b44}</UniqueIdentifier>
     </Filter>
-    <Filter Include="X1API">
-      <UniqueIdentifier>{03f37b99-d864-4887-b758-d00979202e74}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Engine\SDK">
       <UniqueIdentifier>{97b1749c-5e42-448b-b981-b9cf247b387a}</UniqueIdentifier>
     </Filter>
@@ -728,15 +725,6 @@
     <Filter Include="Hacks\Skins">
       <UniqueIdentifier>{1004cc64-aaa1-463e-aeba-e59316916888}</UniqueIdentifier>
     </Filter>
-    <Filter Include="X1API\MinHook">
-      <UniqueIdentifier>{8f23c2de-3e77-4f75-9da6-18e544a211e2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="X1API\MinHook\src">
-      <UniqueIdentifier>{f2ba0c36-3b19-4f05-a5b9-00d93561e787}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="X1API\MinHook\src\HDE">
-      <UniqueIdentifier>{6f2f22a6-956c-4606-b3e5-34db17ecbb39}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Render\DirectData">
       <UniqueIdentifier>{40352bc6-5cd0-45a3-8117-5d9088ffeb48}</UniqueIdentifier>
     </Filter>
@@ -746,17 +734,26 @@
     <Filter Include="steam_sdk">
       <UniqueIdentifier>{b4dc45bb-b5aa-490f-be49-2cf3b966efbb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="VMP">
-      <UniqueIdentifier>{929dde5c-7916-4e50-85be-59b2697f5b0d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="X1API\Hide">
-      <UniqueIdentifier>{dfbbe952-7a30-4e4e-80ed-8f7a01c7af4f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="protobuf">
       <UniqueIdentifier>{0d6f2192-ef48-4224-b299-48a3df172849}</UniqueIdentifier>
     </Filter>
     <Filter Include="Engine\Utils">
       <UniqueIdentifier>{45881dc7-a42b-425c-9494-7ff37ac1463f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="API">
+      <UniqueIdentifier>{03f37b99-d864-4887-b758-d00979202e74}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="API\MinHook">
+      <UniqueIdentifier>{8f23c2de-3e77-4f75-9da6-18e544a211e2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="API\MinHook\src">
+      <UniqueIdentifier>{f2ba0c36-3b19-4f05-a5b9-00d93561e787}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="API\MinHook\src\HDE">
+      <UniqueIdentifier>{6f2f22a6-956c-4606-b3e5-34db17ecbb39}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="API\Hide">
+      <UniqueIdentifier>{dfbbe952-7a30-4e4e-80ed-8f7a01c7af4f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

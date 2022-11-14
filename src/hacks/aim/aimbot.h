@@ -116,7 +116,7 @@ protected:
 	virtual void Menu() = 0;
 	virtual void SubsectionsMenu() = 0;
 	virtual void Draw() = 0;
-	virtual void CreateMove(bool &bSendPacket, float flInputSampleTime, CUserCmd* pCmd) = 0;
+	virtual void CreateMove(int sequence, float frametime, bool active, bool& bSendPacket) = 0;
 	virtual void SetSelectedWeapon(bool MenuCheck = true) = 0;
 	virtual void TriggerRCS(int X, int Y, CUserCmd* pCmd, bool Enable) = 0;
 	virtual bool __declspec(noinline) CanFire(Vector mAngle, CUserCmd* pCmd, CBaseEntity* BaseEnt, int BestInd, CBaseEntity* Local, bool AllHitGroup) = 0;
@@ -140,7 +140,7 @@ public:
 	virtual void Menu();
 	virtual void SubsectionsMenu();
 	virtual void Draw();
-	virtual void CreateMove(bool &bSendPacket, float flInputSampleTime, CUserCmd* pCmd);
+	virtual void CreateMove(int sequence, float frametime, bool active, bool& bSendPacket);
 	virtual void SetSelectedWeapon(bool MenuCheck = true);
 	virtual void SaveWeapons(nlohmann::json &j);
 	virtual void LoadWeapons(nlohmann::json &j);

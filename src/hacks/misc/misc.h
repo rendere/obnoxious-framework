@@ -18,8 +18,8 @@ protected:
 	virtual void AutoAcceptEmit() = 0;
 	virtual void Menu() = 0;
 	virtual void Draw() = 0;
-	virtual void CreateMove(bool &bSendPacket, float flInputSampleTime, CUserCmd* pCmd) = 0;
-	virtual void CreateMoveEP(bool &bSendPacket, CUserCmd* pCmd) = 0;
+	virtual void CreateMove(int sequence, float frametime, bool active, bool& bSendPacket) = 0;
+	virtual void CreateMoveEP(int sequence, float frametime, bool active, bool& bSendPacket) = 0;
 	virtual void FrameStageNotify(ClientFrameStage_t Stage) = 0;
 	virtual void OverrideView(CViewSetup* pSetup) = 0;
 };
@@ -39,8 +39,8 @@ public:
 
 	virtual void Menu();
 	virtual void Draw();
-	virtual void CreateMove(bool &bSendPacket, float flInputSampleTime, CUserCmd* pCmd);
-	virtual void CreateMoveEP(bool &bSendPacket, CUserCmd* pCmd);
+	virtual void CreateMove(int sequence, float frametime, bool active, bool& bSendPacket);
+	virtual void CreateMoveEP(int sequence, float frametime, bool active, bool& bSendPacket);
 	virtual void FrameStageNotify(ClientFrameStage_t Stage);
 	virtual void OverrideView(CViewSetup* pSetup);
 	virtual void AutoAcceptEmit();

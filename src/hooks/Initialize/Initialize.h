@@ -31,7 +31,7 @@ public:
 #define RetrieveMessageIdx 2
 #define EmitSoundIdx 5
 #define OverrideViewIdx 18
-#define CreateMoveIdx 24
+#define CreateMoveIdx 22
 #define GetViewModelFOVIdx 35
 #define FrameStageNotifyIdx 37
 #define LockCursorIdx 67
@@ -49,9 +49,9 @@ public:
 			auto LInitHooks = [&]() -> void
 			{
 				debug_log("init hooks/variables:\n");
-				debug_log("2-1-11-0\n");
+				debug_log("getting context...\n");
 				auto& pContext = cContext::GetInstance();
-				debug_log("2-1-11-1\n");
+				debug_log("hooking interfaces...\n");
 				PVOID* SoundTable = *reinterpret_cast<PVOID**>(I::Sound());
 				PVOID* SurfaceTable = *reinterpret_cast<PVOID**>(I::Surface());
 				PVOID* ClientModeTable = *reinterpret_cast<PVOID**>(I::ClientMode());
@@ -59,34 +59,34 @@ public:
 				PVOID* ModelRenderTable = *reinterpret_cast<PVOID**>(I::ModelRender());
 				PVOID* SteamTable = *reinterpret_cast<PVOID**>(I::SteamGameCoordinator());
 
-				debug_log("2-1-11-2\n");
+				debug_log("beginning hooks.\n");
 #ifndef ONLY_DRAW_HOOK
-				debug_log("2-1-11-3\n");
+				debug_log("no only_draw_hooks: hooking all...\n");
 				if (SoundTable)
 				{
 					pContext.ApplyDetour<EmitSoundFn>(static_cast<EmitSoundFn>(SoundTable[EmitSoundIdx]),
 						reinterpret_cast<EmitSoundFn>
 						(hkEmitSound),
 						&pEmitSound);
-					debug_log("Hook: Emit Sound\n");
+					debug_log("hooking: emitsound\n");
 				}
-				debug_log("2-1-11-4\n");
+				debug_log("emitsound hooked\n");
 				if (SurfaceTable)
 				{
 					pContext.ApplyDetour<LockCursorFn>(static_cast<LockCursorFn>(SurfaceTable[LockCursorIdx]),
 						reinterpret_cast<LockCursorFn>
 						(hkLockCursor),
 						&pLockCursor);
-					debug_log("Hook: Cursor\n");
+					debug_log("hooking: cursor\n");
 				}
-				debug_log("2-1-11-5\n");
+				debug_log("cursor hooked\n");
 				if (ClientModeTable)
 				{
-					pContext.ApplyDetour<CreateMoveFn>(static_cast<CreateMoveFn>(ClientModeTable[CreateMoveIdx]),
+					pContext.ApplyDetour<CreateMoveFn>(static_cast<CreateMoveFn>(ClientTable[CreateMoveIdx]),
 						reinterpret_cast<CreateMoveFn>
-						(hkCreateMove),
+						(hkCreateMove_proxy),
 						&pCreateMove);
-					debug_log("Hook: CreateMove\n");
+					debug_log("hooking: createmove_proxy\n");
 
 					pContext.ApplyDetour<OverrideViewFn>(static_cast<OverrideViewFn>(ClientModeTable[OverrideViewIdx]),
 						reinterpret_cast<OverrideViewFn>
@@ -230,7 +230,6 @@ public:
 				offsets["AnimOverlays"] = 0x2990;
 
 				offsets["d3d9TablePtrPtr"] = (Utils::PatternScan(shaderapidx9Factory, __xor("A1 ? ? ? ? 50 8B 08 FF 51 0C")) + 1);
-				offsets["Input"] = (Utils::PatternScan(clientFactory, __xor("B9 ? ? ? ? F3 0F 11 04 24 FF 50 10")) + 1);
 				offsets["MoveHelper"] = (Utils::PatternScan(clientFactory, __xor("8B 0D ? ? ? ? 8B 45 ? 51 8B D4 89 02 8B 01")) + 2);
 				offsets["ClientState"] = (Utils::PatternScan(engineFactory, __xor("A1 ? ? ? ? 8B 80 ? ? ? ? C3")) + 1);
 				offsets["GameRules"] = (Utils::PatternScan(clientFactory, __xor("89 35 ? ? ? ? C7 46 ? ? ? ? ? 89 46 1C 5E")) + 2);

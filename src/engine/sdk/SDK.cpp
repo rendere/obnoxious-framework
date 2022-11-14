@@ -84,7 +84,7 @@ namespace SDK
 		if (!g_pClient)
 		{
 			g_pClient = GetInterface<IBaseClientDLL>(clientFactory, __xor("VClient0"));
-			while (!((DWORD)**(IClientMode***)((*(uint32_t**)Client())[10] + 0x5)) || !((DWORD)**(CGlobalVarsBase***)((*(uint32_t**)Client())[0] + 0x1F)))
+			while (!((DWORD)**(IClientMode***)((*(uint32_t**)Client())[10] + 0x5)) || !((DWORD)**(CGlobalVarsBase***)((*(uint32_t**)Client())[11] + 0xA)))
 			{
 				FastCall::G().t_Sleep(1000);
 			}
@@ -281,7 +281,7 @@ namespace SDK
 	{
 		if (!g_pInput)
 		{
-			g_pInput = *(CInput**)(offsets["Input"]);
+			g_pInput = *(CInput**)((*(uint32_t**)Client())[16] + 0x1);
 			debug_log("->Input -> %X\n", (DWORD)g_pInput);
 		}
 		return g_pInput;

@@ -278,8 +278,9 @@ bool DisableNewWeapn = false;
 bool NextAutoShot = false;
 float Start = 0;
 
-void CAimbot::CreateMove(bool &bSendPacket, float flInputSampleTime, CUserCmd* pCmd)
+void CAimbot::CreateMove(int sequence, float frametime, bool active, bool& bSendPacket)
 {
+	CUserCmd* pCmd = I::Input()->GetUserCmd(sequence);
 	iBestTarget = -1;
 	iBestHitBox = -1;
 
