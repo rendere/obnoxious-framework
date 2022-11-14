@@ -35,6 +35,7 @@ public:
 #define GetViewModelFOVIdx 35
 #define FrameStageNotifyIdx 37
 #define LockCursorIdx 67
+#define AllocKeyValuesIdx 2
 
 using namespace HookTables;
 
@@ -107,7 +108,7 @@ public:
 				}
 				if (KeyValuesTable)
 				{
-					pContext.ApplyDetour<AllocKeyValuesMemFn>(static_cast<AllocKeyValuesMemFn>(KeyValuesTable[2]),
+					pContext.ApplyDetour<AllocKeyValuesMemFn>(static_cast<AllocKeyValuesMemFn>(KeyValuesTable[AllocKeyValuesIdx]),
 						reinterpret_cast<AllocKeyValuesMemFn>
 						(hkAllocKeyValuesMemory),
 						&pAllocKeyValues);
