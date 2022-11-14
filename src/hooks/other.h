@@ -29,17 +29,16 @@
 //
 //    return result;
 //}
-void* __fastcall hkAllocKeyValuesMemory(void* thisptr, std::uintptr_t, int iSize)
+void* __fastcall hkAllocKeyValuesMemory(CKeyValuesSystem* thisptr, int iSize)
 {
 	static auto ofunc = HookTables::pAllocKeyValues->GetTrampoline();
 
-	static const std::uintptr_t uAllocKeyValuesEngine = Utils::RelativeToAbsolute((Utils::PatternScan(engineFactory, __xor("E8 ? ? ? ? 83 C4 08 84 C0 75 10 FF 75 0C")) + 1)) + 0x4A;
-	static const std::uintptr_t uAllocKeyValuesClient = Utils::RelativeToAbsolute((Utils::PatternScan(clientFactory, __xor("E8 ? ? ? ? 83 C4 08 84 C0 75 10")) + 1)) + 0x3E;
-	const std::uintptr_t uReturnAddress = reinterpret_cast<std::uintptr_t>(_ReturnAddress());
-	if (uReturnAddress == uAllocKeyValuesEngine || uReturnAddress == uAllocKeyValuesClient)
+	static const std::uintptr_t uAllocKeyValuesEngine = Utils::RelativeToAbsolute(Utils::PatternScan(engineFactory, __xor("E8 ? ? ? ? 83 C4 08 84 C0 75 10 FF 75 0C")) + 1) + 0x4A;
+	static const std::uintptr_t uAllocKeyValuesClient = Utils::RelativeToAbsolute(Utils::PatternScan(clientFactory, __xor("E8 ? ? ? ? 83 C4 08 84 C0 75 10")) + 1) + 0x3E;
+	if (reinterpret_cast<std::uintptr_t>(_ReturnAddress()) == uAllocKeyValuesEngine || reinterpret_cast<std::uintptr_t>(_ReturnAddress()) == uAllocKeyValuesClient)
 		return nullptr;
 
-	ofunc(thisptr, 0U, iSize);
+	ofunc(thisptr, iSize);
 }
 #ifdef ENABLE_INVENTORY
 EGCResults __fastcall hkRetrieveMessage(void* ecx, void* edx, uint32_t* punMsgType, void* pubDest, uint32_t cubDest, uint32_t* pcubMsgSize)
