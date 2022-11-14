@@ -1,12 +1,5 @@
-# OUTDATED!
-
-as of 7/4/22, this sdk hasn't been updated in over half a year. i will not be updating it any further. proceed accordingly.
-
-
 # obnoxious framework ![alt text](https://i.imgur.com/ZXcfFYJ.png) ![alt text](https://i.imgur.com/RHlmKYL.png) ![alt text](https://i.imgur.com/1OKJ96Z.png) ![alt text](https://i.imgur.com/RPz95ve.png)
-Free open-source internal software for Counter-Strike: Global Offensive.
-
-Forked from [this project](https://github.com/Spangonagornomb/Csgo-cheat). Updated to support the latest version of Steam. Credits to YouRF for creating the original SDK back in 2017.
+free open-source internal training software for Counter-Strike: Global Offensive.
 
 # pre-requisites
 
@@ -15,19 +8,3 @@ Forked from [this project](https://github.com/Spangonagornomb/Csgo-cheat). Updat
 [DirectX SDK from June 2010](https://www.microsoft.com/en-us/download/details.aspx?id=6812)
 
 A [DLL injector](https://en.wikipedia.org/wiki/DLL_injection) to inject the build
-
-# changelogs from original release
-
--updated to latest version
-
--mouse4-mouse5 fix
-
--added movement features (jumpbug, edgebug etc...)
-
--fully removed vmp support
-
--a lot of bugs, crashes were patched, performance optimized
-
-# screenshots
-
-soon
