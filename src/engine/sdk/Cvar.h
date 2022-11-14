@@ -28,43 +28,43 @@ namespace SDK
 		void* fnChangeCallback; //0x0044 
 
 
-		void ConVar::SetValue(const char* value)
+		void SetValue(const char* value)
 		{
 			typedef void(__thiscall* OriginalFn)(void*, const char*);
 			return GetMethod<OriginalFn>(this, 14)(this, value);
 		}
 
-		void ConVar::SetValue(float value)
+		void SetValue(float value)
 		{
 			typedef void(__thiscall* OriginalFn)(void*, float);
 			return GetMethod<OriginalFn>(this, 15)(this, value);
 		}
 
-		void ConVar::SetValue(int value)
+		void SetValue(int value)
 		{
 			typedef void(__thiscall* OriginalFn)(void*, int);
 			return GetMethod<OriginalFn>(this, 16)(this, value);
 		}
 
-		void ConVar::SetValue(Color value)
+		void SetValue(Color value)
 		{
 			typedef void(__thiscall* OriginalFn)(void*, Color);
 			return GetMethod<OriginalFn>(this, 17)(this, value);
 		}
 
-		float ConVar::GetFloat(void)
+		float GetFloat(void)
 		{
 			DWORD xored = *(DWORD*)&this->fValue ^ (DWORD)this;
 			return *(float*)&xored;
 		}
 
-		char* ConVar::GetName()
+		char* GetName()
 		{
 			typedef char* (__thiscall* OriginalFn)(void*);
 			return GetMethod<OriginalFn>(this, 5)(this);
 		}
 
-		char* ConVar::GetDefault()
+		char* GetDefault()
 		{
 			return pszDefaultValue;
 		}

@@ -267,7 +267,7 @@ LRESULT WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 	{
 		CGlobal::IsGuiVisible = !CGlobal::IsGuiVisible;
 	
-		debug_log("Menu Open: %i\n", CGlobal::IsGuiVisble);
+		debug_log("Menu Open: %i\n", CGlobal::IsGuiVisible);
 
 		if (!check_closed)
 			check_closed = true;

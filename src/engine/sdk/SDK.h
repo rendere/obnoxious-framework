@@ -105,6 +105,7 @@ namespace SDK
 		static IGameMovement*	      GameMovement();
 		static IGameRules*			  GameRules();
 		static IMemAlloc*             MemAlloc();
+		static CKeyValuesSystem*      KeyValuesSystem();
 	private:
 		static IVEngineClient*		  g_pEngine;
 		static IBaseClientDLL*		  g_pClient;
@@ -132,6 +133,7 @@ namespace SDK
 		static IGameMovement*         g_pGameMovement;
 		static IGameRules*            g_pGameRules;
 		static IMemAlloc*             g_pMemAlloc;
+		static CKeyValuesSystem*      g_pKeyValuesSystem;
 	};
 
 	template <typename T>

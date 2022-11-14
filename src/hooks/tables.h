@@ -9,7 +9,7 @@ namespace HookTables
 	using oEndScene = HRESULT(STDMETHODCALLTYPE*)(IDirect3DDevice9*);
 	using oPresent = HRESULT(STDMETHODCALLTYPE*)(IDirect3DDevice9*, CONST RECT*, CONST RECT*, HWND, CONST RGNDATA*);
 	using oReset = HRESULT(STDMETHODCALLTYPE*)(IDirect3DDevice9*, D3DPRESENT_PARAMETERS*);
-
+	typedef void* (__thiscall* AllocKeyValuesMemFn)(PVOID, int);
 	using CreateMoveFn = void(__stdcall*)(int,float,bool);
 	using OverrideViewFn = bool(__stdcall*)(CViewSetup*);
 	using GetViewModelFOVFn = float(__stdcall*)();
@@ -29,7 +29,7 @@ namespace HookTables
 	cDetour<oPresent>* pPresent;
 	cDetour<oEndScene>* pEndScene;
 	cDetour<oReset>* pReset;
-
+	cDetour<AllocKeyValuesMemFn>* pAllocKeyValues;
 	cDetour<RecvVarProxyFn>* fnSequenceProxyFn;
 	cDetour<RecvVarProxyFn>* oRecvnModelIndex;
 
@@ -61,6 +61,7 @@ namespace HookTables
 
 		/*Function hook*/
 		pCreateMove->Remove();
+		pAllocKeyValues->Remove();
 		pOverrideView->Remove();
 		pGetViewModelFOV->Remove();
 		pFrameStageNotify->Remove();

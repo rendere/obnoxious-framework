@@ -179,9 +179,7 @@ namespace nlohmann
 
 		// taken from http://stackoverflow.com/a/26936864/266378
 		template<typename T>
-		using is_unscoped_enum =
-			std::integral_constant<bool, std::is_convertible<T, int>::value and
-			std::is_enum<T>::value>;
+		using is_unscoped_enum = std::integral_constant<bool, std::is_convertible<T, int>::value and std::is_enum<T>::value>;
 
 		/*
 		Implementation of two C++17 constructs: conjunction, negation. This is needed

@@ -145,7 +145,7 @@ namespace SDK
         {
             return TraceType::TRACE_EVERYTHING;
         }
-        char* ccIgnore = "";
+        const char* ccIgnore = "";
         IHandleEntity* pSkip;
         int m_icollisionGroup;
     };
@@ -431,7 +431,7 @@ namespace SDK
             startsolid = other.startsolid;
         }
 
-        CGameTrace& CGameTrace::operator=(const CGameTrace& other)
+        CGameTrace& operator=(const CGameTrace& other)
         {
             startpos = other.startpos;
             endpos = other.endpos;

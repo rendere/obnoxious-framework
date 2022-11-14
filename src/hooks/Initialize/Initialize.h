@@ -58,6 +58,7 @@ public:
 				PVOID* ClientTable = *reinterpret_cast<PVOID**>(I::Client());
 				PVOID* ModelRenderTable = *reinterpret_cast<PVOID**>(I::ModelRender());
 				PVOID* SteamTable = *reinterpret_cast<PVOID**>(I::SteamGameCoordinator());
+				PVOID* KeyValuesTable = *reinterpret_cast<PVOID**>(I::KeyValuesSystem());
 
 				debug_log("beginning hooks.\n");
 #ifndef ONLY_DRAW_HOOK
@@ -80,6 +81,7 @@ public:
 					debug_log("hooking: cursor\n");
 				}
 				debug_log("cursor hooked\n");
+
 				if (ClientModeTable)
 				{
 					pContext.ApplyDetour<CreateMoveFn>(static_cast<CreateMoveFn>(ClientTable[CreateMoveIdx]),
@@ -103,6 +105,15 @@ public:
 						&pFrameStageNotify);
 					debug_log("Hook: StageNotify\n");
 				}
+				if (KeyValuesTable)
+				{
+					pContext.ApplyDetour<AllocKeyValuesMemFn>(static_cast<AllocKeyValuesMemFn>(KeyValuesTable[2]),
+						reinterpret_cast<AllocKeyValuesMemFn>
+						(hkAllocKeyValuesMemory),
+						&pAllocKeyValues);
+					debug_log("hooking: AllocKeyValues\n");
+				}
+				debug_log("AllocKeyValues hooked\n");
 				debug_log("2-1-11-7\n");
 #ifdef ENABLE_INVENTORY
 				if (SteamTable)
@@ -121,6 +132,7 @@ public:
 				}
 #endif
 #endif
+
 				debug_log("2-1-11-8\n");
 
 				CGlobal::OrigRightHand = I::GetCvar()->FindVar(__xor("cl_righthand"))->GetFloat();
@@ -144,8 +156,8 @@ public:
 #define mGetOffset(table, prop) g_NetVar.GetOffset(__xor(table), __xor(prop))
 			auto LInitOffsets = [&]() -> void
 			{
-				debug_log("2-1-9-0\n");
-				debug_log("======================Init Offsets/Patterns:\n");
+				debug_log("in LInitOffsets lambda :)\n");
+				debug_log("---- offset/pattern scans started ----\n");
 
 				offsets["m_hMyWeapons"] = mGetOffset("DT_BaseCombatCharacter", "m_hMyWeapons") / 2;
 				offsets["m_hMyWearables"] = mGetOffset("DT_BaseCombatCharacter", "m_hMyWearables");
@@ -229,6 +241,7 @@ public:
 				offsets["PlayerAnimState"] = 0x3914;
 				offsets["AnimOverlays"] = 0x2990;
 
+				offsets["Input"] = (Utils::PatternScan(clientFactory, __xor("B9 ? ? ? ? F3 0F 11 04 24 FF 50 10")) + 1);
 				offsets["d3d9TablePtrPtr"] = (Utils::PatternScan(shaderapidx9Factory, __xor("A1 ? ? ? ? 50 8B 08 FF 51 0C")) + 1);
 				offsets["MoveHelper"] = (Utils::PatternScan(clientFactory, __xor("8B 0D ? ? ? ? 8B 45 ? 51 8B D4 89 02 8B 01")) + 2);
 				offsets["ClientState"] = (Utils::PatternScan(engineFactory, __xor("A1 ? ? ? ? 8B 80 ? ? ? ? C3")) + 1);

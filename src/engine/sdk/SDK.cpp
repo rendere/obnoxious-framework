@@ -32,6 +32,7 @@ namespace SDK
 	IGameMovement*         I::g_pGameMovement = nullptr;
 	IGameRules*            I::g_pGameRules = nullptr;
 	IMemAlloc*             I::g_pMemAlloc = nullptr;
+	CKeyValuesSystem*	   I::g_pKeyValuesSystem = nullptr;
 
 	class InterfaceReg
 	{
@@ -281,12 +282,22 @@ namespace SDK
 	{
 		if (!g_pInput)
 		{
-			g_pInput = *(CInput**)((*(uint32_t**)Client())[16] + 0x1);
+			g_pInput = *(CInput**)(offsets["Input"]);
 			debug_log("->Input -> %X\n", (DWORD)g_pInput);
 		}
 		return g_pInput;
 	}
 
+	CKeyValuesSystem* I::KeyValuesSystem()
+	{
+		if (!g_pKeyValuesSystem)
+		{
+			g_pKeyValuesSystem = *(CKeyValuesSystem**)(FastCall::G().t_GetProcAddress(FastCall::G().t_GetModuleHandleA(valveStdFactory), __xor("KeyValuesSystem")));
+			debug_log("->KeyValuesSystem -> %X\n", (DWORD)g_pKeyValuesSystem);
+
+			return g_pKeyValuesSystem;
+		}
+	}
 	IMoveHelper* I::MoveHelper()
 	{
 		if (!g_pMoveHelper)

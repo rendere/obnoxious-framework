@@ -9,18 +9,17 @@ namespace SDK
 	{
 	public:
 
-
-		byte			    m_pad0[0xC];				// 0x00
-		bool				m_bTrackIRAvailable;		// 0x0C
-		bool				m_bMouseInitialized;		// 0x0D
-		bool				m_bMouseActive;				// 0x0E
-		byte			    m_pad1[0x9A];				// 0x0F
-		bool				m_bCameraInThirdPerson;		// 0xA9
-		byte			    m_pad2[0x2];				// 0xAA
-		Vector				m_vecCameraOffset;			// 0xAC
-		byte			    m_pad3[0x38];				// 0xB8
-		CUserCmd*           m_pCommands;				// 0xF0
-		CVerifiedUserCmd*   m_pVerifiedCommands;		// 0xF4
+		char	            pad0[0xC];            // 0x0
+		bool                bTrackIRAvailable;        // 0xC
+		bool                bMouseInitialized;        // 0xD
+		bool                bMouseActive;            // 0xE
+		char	            pad1[0x9A];            // 0xF
+		bool                bCameraInThirdPerson;    // 0xA9
+		char				pad2[0x2];            // 0xAA
+		Vector              vecCameraOffset;        // 0xAC
+		char	            pad3[0x38];            // 0xB8
+		CUserCmd* m_pCommands;            // 0xF0
+		CVerifiedUserCmd* m_pVerifiedCommands;    // 0xF4
 		inline CUserCmd* GetUserCmd(int sequence_number);
 		inline CUserCmd* GetUserCmd(int nSlot, int sequence_number);
 		inline CVerifiedUserCmd* GetVerifiedCmd(int sequence_number);
@@ -40,8 +39,7 @@ namespace SDK
 
 	CVerifiedUserCmd* CInput::GetVerifiedCmd(int sequence_number)
 	{
-		auto verifiedCommands = *(CVerifiedUserCmd**)(reinterpret_cast<uint32_t>(this) + 0xF8);
-		return &verifiedCommands[sequence_number % MULTIPLAYER_BACKUP];
+		return &(*(CVerifiedUserCmd**)((DWORD)this + 0x010C))[sequence_number % MULTIPLAYER_BACKUP];
 	}
 
 }

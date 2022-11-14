@@ -4,7 +4,7 @@
 
 void __stdcall hkCreateMove(int sequence, float frametime, bool active, bool& bSendPacket)
 {
-    HookTables::pCreateMove->GetTrampoline()(sequence, frametime, active);
+    static auto oCmove = HookTables::pCreateMove->GetTrampoline();
 
 	CUserCmd* pCmd = I::Input()->GetUserCmd(sequence);
 	CVerifiedUserCmd* pVerified = I::Input()->GetVerifiedCmd(sequence);
@@ -28,13 +28,9 @@ void __stdcall hkCreateMove(int sequence, float frametime, bool active, bool& bS
 			if (GP_Esp->GranadePrediction)
 				grenade_prediction::Get().Tick(pCmd->buttons);
 
-		DWORD* FirstP;
-		__asm mov FirstP, ebp;
-
-		bool bSendPacket = true;
-
 		if (CGlobal::IsGuiVisible)
 			pCmd->buttons &= ~IN_ATTACK;
+
 		else if (GP_Skins && !CGlobal::IsGuiVisible)
 			GP_Skins->SelectedWeapon = CGlobal::GetWeaponId();
 
@@ -64,9 +60,11 @@ void __stdcall hkCreateMove(int sequence, float frametime, bool active, bool& bS
 		CGlobal::ClampAngles(pCmd->viewangles);
 		CGlobal::AngleNormalize(pCmd->viewangles);
 
+		pVerified->m_cmd = *pCmd;
+		pVerified->m_crc = pCmd->GetChecksum();
+
+		oCmove(sequence, frametime, active); // I WASTED 2 HOURS JUST BC I DIDNT CALL THE ORIGINAL. LMFAOOOOOOOOOOOOO.
 	}
-	pVerified->m_cmd = *pCmd;
-	pVerified->m_crc = pCmd->GetChecksum();
 }
 
 __declspec(naked) void __stdcall hkCreateMove_proxy(int sequence, float frametime, bool active)

@@ -15,8 +15,7 @@ namespace SDK
 		Vector2D( void );
 		Vector2D( vec_t X , vec_t Y );
 		Vector2D( vec_t* clr );
-
-		Vector2D::Vector2D( const Vector2D &vOther ) {
+		Vector2D( const Vector2D &vOther ) {
 			x = vOther.x; y = vOther.y;
 		}
 

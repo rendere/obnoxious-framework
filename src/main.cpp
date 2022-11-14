@@ -23,7 +23,7 @@ BOOL WINAPI DllMain(_In_ HINSTANCE hinstDll, _In_ DWORD fdwReason, _In_opt_ LPVO
 	switch (fdwReason)
 	{
 	case DLL_PROCESS_ATTACH:
-#ifdef I_WANT_CONSOLE_LOG_CAUSE_IM_A_RETARD
+#ifdef CONSOLE_LOGS
 		AllocConsole();
 		AttachConsole(FastCall::G().t_GetCurrentProcessId());
 		freopen("CONOUT$", "w", stdout);

@@ -143,6 +143,12 @@ namespace Utils
 		FastCall::G().t_MessageBoxA(NULL, (__xor("Failed to find pattern #") + std::to_string(id) + '!').c_str(), __xor("obnoxious"), MB_OK | MB_ICONWARNING);
 		return 0;
 	}
+
+
+	std::uintptr_t RelativeToAbsolute(const std::uintptr_t uRelativeAddress)
+	{
+		return uRelativeAddress + 0x4 + *reinterpret_cast<std::int32_t*>(uRelativeAddress);
+	}
 }
 
 

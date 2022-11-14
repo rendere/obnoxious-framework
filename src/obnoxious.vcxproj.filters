@@ -675,6 +675,7 @@
     <ClInclude Include="protobuf\steamdatagram_messages.pb.h" />
     <ClInclude Include="protobuf\steammessages.pb.h" />
     <ClInclude Include="Hacks\Inventory\Inventory.h" />
+    <ClInclude Include="engine\sdk\IKeyValuesSystem.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Engine">

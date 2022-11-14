@@ -50,7 +50,7 @@ public:
 	public:
 		virtual void Setup()
 		{
-			debug_log("2-1-11-7-0\n");
+			printf_s("2-1-11-7-0\n");
 			GP_Render =		new CRender::IRender();
 			GP_EntPlayers = new CEntityPlayers();
 			GP_Esp =		new CEsp();
@@ -62,14 +62,14 @@ public:
 #endif
 			GP_GHelper =	new CGHelper();
 			GP_Main =       new CMain();
-			debug_log("2-1-11-7-1\n");
+			printf_s("2-1-11-7-1\n");
 			CGSettings::G().UpdateList();
-			debug_log("2-1-11-7-2\n");
+			printf_s("2-1-11-7-2\n");
 			GP_Esp->InitVisuals();
 			GP_LegitAim->InitConVar();
 			GP_Render->Initialize();
 			GP_GHelper->Initialize();
-			debug_log("2-1-11-7-3\n");
+			printf_s("2-1-11-7-3\n");
 #ifndef ONLY_DRAW_HOOK
 			GP_Skins->FireEvent.RegListener();
 			GP_Skins->initialize_kits();
@@ -79,9 +79,9 @@ public:
 			GP_Inventory->InitalizeMedals();
 #endif
 #endif
-			debug_log("2-1-11-7-4\n");
+			printf_s("2-1-11-7-4\n");
 			GP_Skins->AllSkinsLoaded = true;
-			debug_log("2-1-11-7-5\n");
+			printf_s("2-1-11-7-5\n");
 			 
 		}
 		virtual void Shutdown()

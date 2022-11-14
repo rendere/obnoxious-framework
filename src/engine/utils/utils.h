@@ -16,4 +16,6 @@ namespace Utils
 	DWORD PatternScan(std::string moduleName, std::string Mask);
 	/* IDA Style \xE8????\x8B */
 	std::uintptr_t FindPattern(const wchar_t* module, const char* pattern);
+	std::uintptr_t RelativeToAbsolute(const std::uintptr_t uRelativeAddress);
+
 }

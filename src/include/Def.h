@@ -7,8 +7,8 @@
 */
 #define ENABLE_INVENTORY
 #define PRESENT_ENABLE
-//#define ONLY_DRAW_HOOK // if you got balls to play with just a boxesp on non-prime, go ahead
-//#define I_WANT_CONSOLE_LOG_CAUSE_IM_A_RETARD // real men use windbg, wtf is this garbage
+//#define ONLY_DRAW_HOOK // gonna be needed for trust factor - hooking tests.
+#define CONSOLE_LOGS
 //#define ENABLE_DEBUG_FILE
 #define MAX_FONT_SIZE 30
 #define ENABLE_HOOK_CS_WND_PROC
@@ -16,7 +16,7 @@
 #define MAX_ENTITY_PLAYERS 64
 #define CHEAT_HEAD __xor("obnoxious framework")
 
-#ifdef I_WANT_CONSOLE_LOG_CAUSE_IM_A_RETARD
+#ifdef CONSOLE_LOGS
 #define debug_log(m, ...) printf(m, __VA_ARGS__)
 #else
 #define debug_log(m, ...)
